@@ -1,4 +1,4 @@
-package com.vaadin.flow.component.incubator;
+package com.vaadin.componentfactory;
 
 /*
  * #%L
@@ -8,10 +8,8 @@ package com.vaadin.flow.component.incubator;
  * %%
  * This program is available under Commercial Vaadin Add-On License 3.0
  * (CVALv3).
- * 
  * See the file license.html distributed with this software for more
  * information about licensing.
- * 
  * You should have received a copy of the CVALv3 along with this program.
  * If not, see <http://vaadin.com/license/cval-3>.
  * #L%
@@ -24,19 +22,17 @@ import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.templatemodel.TemplateModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
 /**
- * Server-side component for the <code>incubator-popup</code> element.
+ * Server-side component for the <code>vcf-popup</code> element.
  *
  * @author Vaadin Ltd
  */
-@Tag("incubator-popup")
+@Tag("vcf-popup")
 @HtmlImport("flow-component-renderer.html")
-@HtmlImport("frontend://bower_components/incubator-popup/src/incubator-popup.html")
+@HtmlImport("frontend://bower_components/vcf-popup/src/vcf-popup.html")
 public class Popup extends PolymerTemplate<Popup.PopupModel> {
     private Element template;
     private Element container;
@@ -155,7 +151,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      * Adds the given components into this dialog.
      * <p>
      * The elements in the DOM will not be children of the
-     * {@code <incubator-popup>} element, but will be inserted into an overlay
+     * {@code <vcf-popup>} element, but will be inserted into an overlay
      * that is attached into the {@code <body>}.
      *
      * @param components
@@ -201,7 +197,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
     /**
      * Adds the given component into this dialog at the given index.
      * <p>
-     * The element in the DOM will not be child of the {@code <incubator-popup>}
+     * The element in the DOM will not be child of the {@code <vcf-popup>}
      * element, but will be inserted into an overlay that is attached into the
      * {@code <body>}.
      *
@@ -235,7 +231,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
     }
 
     /**
-     * This model binds properties between java(Popup) and polymer(incubator-popup.html)
+     * This model binds properties between java(Popup) and polymer(vcf-popup.html)
      */
     public interface PopupModel extends TemplateModel {
         void setOpened(boolean opened);

@@ -1,10 +1,10 @@
-package com.vaadin.flow.component.incubator.vaadincom;
+package com.vaadin.componentfactory.vaadincom;
 
+import com.vaadin.componentfactory.Popup;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.incubator.Popup;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
