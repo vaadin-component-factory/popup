@@ -5,6 +5,8 @@ It provides a popup that can be bound to element by id, and then be opened by cl
 
 [Live Demo ↗](https://incubator.app.fi/popup-demo/popup)
 
+<img src="https://raw.githubusercontent.com/vaadin/incubator-popup/master/screenshot.png" width="200" alt="Screenshot of vcf-popup">
+
 ## Usage
 After creating new Popup object it should be bound to a target element by calling the method
 `setFor(id)` with the id of the target element as parameter. Then after clicking on the target element, the popup will be opened. 
