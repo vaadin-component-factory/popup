@@ -40,7 +40,7 @@
 	</properties>
 
 	<modules>
-		<!--<module>popup</module>-->
+		<module>popup</module>
 		<module>popup-demo</module>
 	</modules>
 	<repositories>
