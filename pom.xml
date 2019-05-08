@@ -41,7 +41,7 @@
 
 	<modules>
 		<!--<module>popup</module>-->
-		<!--<module>popup-demo</module>-->
+		<module>popup-demo</module>
 	</modules>
 	<repositories>
 		<repository>
