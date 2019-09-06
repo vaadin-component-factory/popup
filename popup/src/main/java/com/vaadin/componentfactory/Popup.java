@@ -1,5 +1,7 @@
 package com.vaadin.componentfactory;
 
+import java.util.Objects;
+
 /*
  * #%L
  * Vaadin Popup for Vaadin 10
@@ -19,11 +21,11 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.templatemodel.TemplateModel;
-
-import java.util.Objects;
 
 /**
  * Server-side component for the <code>vcf-popup</code> element.
@@ -31,8 +33,13 @@ import java.util.Objects;
  * @author Vaadin Ltd
  */
 @Tag("vcf-popup")
+
 @HtmlImport("flow-component-renderer.html")
 @HtmlImport("frontend://bower_components/vcf-popup/src/vcf-popup.html")
+
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.1.0")
+@JsModule("flow-component-renderer.js")
+@JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends PolymerTemplate<Popup.PopupModel> {
     private Element template;
     private Element container;
@@ -68,7 +75,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
     }
 
     /**
-     * Opens popup. If popup is not attached yet will open it after attaching     *
+     * Opens popup. If popup is not attached yet will open it after attaching *
      *
      * @param opened
      */
@@ -95,12 +102,12 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
     /**
      * Sets the target component for this popup.
      * <p>
-     * By default, the context menu can be opened with a left click or
-     * touch on the target component.
+     * By default, the context menu can be opened with a left click or touch on
+     * the target component.
      *
      * @param id
-     *            the if of component for this popup, can be
-     *            {@code null} to remove the target
+     *            the if of component for this popup, can be {@code null} to
+     *            remove the target
      */
     public void setFor(String id) {
         getModel().setFor(id);
@@ -125,11 +132,12 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
     }
 
     /**
-     * Sets parameter closeOnClick. Default if false.
-     * If set to true then popup will be closed when clicking on it and on clicking outside popup.
-     * If set to false then popup will be closed when clicking outside popup
+     * Sets parameter closeOnClick. Default if false. If set to true then popup
+     * will be closed when clicking on it and on clicking outside popup. If set
+     * to false then popup will be closed when clicking outside popup
      *
-     * Should be set before binding to dom. setting after binding will make no effect
+     * Should be set before binding to dom. setting after binding will make no
+     * effect
      *
      * @param close
      */
@@ -140,19 +148,18 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
     /**
      * gets closeOnClick parameter from popup
      *
-      * @return closeOnClick parameter from popup
+     * @return closeOnClick parameter from popup
      */
     public boolean isCloseOnClick() {
         return getModel().isCloseOnClick();
     }
 
-
     /**
      * Adds the given components into this dialog.
      * <p>
-     * The elements in the DOM will not be children of the
-     * {@code <vcf-popup>} element, but will be inserted into an overlay
-     * that is attached into the {@code <body>}.
+     * The elements in the DOM will not be children of the {@code <vcf-popup>}
+     * element, but will be inserted into an overlay that is attached into the
+     * {@code <body>}.
      *
      * @param components
      *            the components to add
@@ -171,7 +178,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      * IllegalArgumentException will be raised
      *
      * @param components
-     *      the components to remove
+     *            the components to remove
      */
     public void remove(Component... components) {
         Objects.requireNonNull(components, "Components should not be null");
@@ -231,16 +238,20 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
     }
 
     /**
-     * This model binds properties between java(Popup) and polymer(vcf-popup.html)
+     * This model binds properties between java(Popup) and
+     * polymer(vcf-popup.html)
      */
     public interface PopupModel extends TemplateModel {
         void setOpened(boolean opened);
+
         boolean isOpened();
 
         void setFor(String id);
+
         String getFor();
 
         void setCloseOnClick(boolean close);
+
         boolean isCloseOnClick();
     }
 }

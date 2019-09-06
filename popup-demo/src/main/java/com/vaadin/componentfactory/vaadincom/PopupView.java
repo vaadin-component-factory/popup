@@ -1,5 +1,7 @@
 package com.vaadin.componentfactory.vaadincom;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import com.vaadin.componentfactory.Popup;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
@@ -8,8 +10,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 @Route("popup")
 public class PopupView extends DemoView {
@@ -57,19 +57,22 @@ public class PopupView extends DemoView {
         Div closeOnClickStatus = new Div();
         closeOnClickStatus.setText("Close on click: " + popup.isCloseOnClick());
 
-        addCard("Popup with close on popup usage", button, popup, closeOnClickStatus);
+        addCard("Popup with close on popup usage", button, popup,
+                closeOnClickStatus);
     }
 
     private void addOpenedExample() {
         Div target = new Div();
-        target.setText("I have popup, click me. P.S: pop-up will gone with first click anywhere");
+        target.setText(
+                "I have popup, click me. P.S: pop-up will gone with first click anywhere");
         target.setId("div-push-me");
 
         Popup popup = new Popup();
         popup.setOpened(true);
         popup.setFor(target.getId().orElse(null));
 
-        popup.add(new Icon(VaadinIcon.VAADIN_H), new Icon(VaadinIcon.VAADIN_H), new Icon(VaadinIcon.VAADIN_H));
+        popup.add(new Icon(VaadinIcon.VAADIN_H), new Icon(VaadinIcon.VAADIN_H),
+                new Icon(VaadinIcon.VAADIN_H));
 
         addCard("Opened popup usage", target, popup);
     }
@@ -81,7 +84,8 @@ public class PopupView extends DemoView {
 
         Popup popup = new Popup();
         popup.setFor(target.getId().orElse(null));
-        popup.add(new Icon(VaadinIcon.VAADIN_H), new Icon(VaadinIcon.VAADIN_H), new Icon(VaadinIcon.VAADIN_H));
+        popup.add(new Icon(VaadinIcon.VAADIN_H), new Icon(VaadinIcon.VAADIN_H),
+                new Icon(VaadinIcon.VAADIN_H));
 
         Button button = new Button("Change popup content");
         button.addClickListener(e -> {
@@ -90,7 +94,7 @@ public class PopupView extends DemoView {
             } else {
                 int elCount = ThreadLocalRandom.current().nextInt(1, 10);
                 popup.removeAll();
-                for (int i = 0 ; i < elCount; i++) {
+                for (int i = 0; i < elCount; i++) {
                     popup.add(new Icon(VaadinIcon.VAADIN_H));
                 }
                 popup.show();
@@ -112,14 +116,17 @@ public class PopupView extends DemoView {
         popup.setFor(target.getId().orElse(null));
         Icon orange = new Icon(VaadinIcon.VAADIN_H);
         orange.setColor("orange");
-        popup.add(new Icon(VaadinIcon.VAADIN_H), orange, new Icon(VaadinIcon.VAADIN_H));
+        popup.add(new Icon(VaadinIcon.VAADIN_H), orange,
+                new Icon(VaadinIcon.VAADIN_H));
 
-        Button button = new Button("Bind/Unbind vaadin");
+        Button button = new Button("Unbind vaadin");
         button.addClickListener(e -> {
             if (popup.getFor() != null) {
                 popup.setFor(null);
+                button.setText("Bind vaadin");
             } else {
                 popup.setFor(target.getId().orElse(null));
+                button.setText("Unbind vaadin");
             }
         });
 
