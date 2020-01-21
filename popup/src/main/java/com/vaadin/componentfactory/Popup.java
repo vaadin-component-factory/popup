@@ -37,7 +37,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 @HtmlImport("flow-component-renderer.html")
 @HtmlImport("frontend://bower_components/vcf-popup/src/vcf-popup.html")
 
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.2.1")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.2.2")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends PolymerTemplate<Popup.PopupModel> {
