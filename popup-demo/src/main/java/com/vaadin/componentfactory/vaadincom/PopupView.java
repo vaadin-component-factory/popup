@@ -38,7 +38,15 @@ public class PopupView extends DemoView {
         Div closeOnClickStatus = new Div();
         closeOnClickStatus.setText("Close on click: " + popup.isCloseOnClick());
 
-        addCard("Basic popup usage", button, popup, closeOnClickStatus);
+        Div eventStatus = new Div();
+        popup.addPopupOpenChangedEventListener(event -> {
+        	if (event.isOpened())
+        		eventStatus.setText("Popup opened");
+        	else
+        		eventStatus.setText("Popup closed");
+        });
+        
+        addCard("Basic popup usage", button, popup, closeOnClickStatus, eventStatus);
     }
 
     private void addCloseOnClickExample() {

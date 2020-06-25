@@ -2,6 +2,8 @@ package com.vaadin.componentfactory;
 
 import java.util.Objects;
 
+import com.vaadin.flow.component.ClientCallable;
+
 /*
  * #%L
  * Vaadin Popup for Vaadin 10
@@ -18,6 +20,8 @@ import java.util.Objects;
  */
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEvent;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -25,6 +29,7 @@ import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.dom.Element;
+import com.vaadin.flow.shared.Registration;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 /**
@@ -58,7 +63,24 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
 
         // Workaround for: https://github.com/vaadin/flow/issues/3496
         setOpened(false);
+        getElement().executeJs("this.$.popupOverlay.addEventListener('vaadin-overlay-close', () => $0.$server.popupOpenChanged(false))",getElement());		
+        getElement().executeJs("this.$.popupOverlay.addEventListener('vaadin-overlay-open', () => $0.$server.popupOpenChanged(true))",getElement());		        
     }
+
+	@ClientCallable
+	private void popupOpenChanged(Boolean opened) {
+		fireEvent(new PopupOpenChangedEvent(this,opened,true));
+	}    
+
+    /**
+     * Adds a listener for {@code PopupOpenChangedEvent} events fired by the webcomponent.
+     *
+     * @param listener the listener
+     * @return a {@link Registration} for removing the event listener
+     */
+    public Registration addPopupOpenChangedEventListener(ComponentEventListener<PopupOpenChangedEvent> listener) {
+        return addListener(PopupOpenChangedEvent.class, listener);
+    }	
 
     /**
      * Showing popup, if not showed yet.
@@ -254,4 +276,19 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
 
         boolean isCloseOnClick();
     }
+
+    public static class PopupOpenChangedEvent extends ComponentEvent<Popup> {
+
+    	private boolean opened;
+
+        public PopupOpenChangedEvent(Popup source, boolean opened, boolean fromClient) {
+            super(source, fromClient);
+            this.opened = opened;
+        }
+
+        public boolean isOpened() {
+        	return opened;
+        }
+    }
+
 }
