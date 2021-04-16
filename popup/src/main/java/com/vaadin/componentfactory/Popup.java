@@ -1,30 +1,33 @@
+/*
+ * Vaadin Popup for Vaadin 14
+ * 
+ * Copyright 2000-2021 Vaadin Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.vaadin.componentfactory;
 
 import java.util.Objects;
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.ClientCallable;
 
-/*
- * #%L
- * Vaadin Popup for Vaadin 10
- * %%
- * Copyright (C) 2017 - 2018 Vaadin Ltd
- * %%
- * This program is available under Commercial Vaadin Add-On License 3.0
- * (CVALv3).
- * See the file license.html distributed with this software for more
- * information about licensing.
- * You should have received a copy of the CVALv3 along with this program.
- * If not, see <http://vaadin.com/license/cval-3>.
- * #L%
- */
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
@@ -48,36 +51,37 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
 
     public Popup() {
         template = new Element("template");
-        getElement().appendChild(template);
 
         container = new Element("div");
         getElement().appendVirtualChild(container);
 
-        // Attach <flow-component-renderer>
-        getElement().getNode()
-                .runWhenAttached(ui -> ui.beforeClientResponse(this,
-                        context -> attachComponentRenderer()));
-
         // Workaround for: https://github.com/vaadin/flow/issues/3496
         setOpened(false);
-        getElement().executeJs("this.$.popupOverlay.addEventListener('vaadin-overlay-close', () => $0.$server.popupOpenChanged(false))",getElement());		
-        getElement().executeJs("this.$.popupOverlay.addEventListener('vaadin-overlay-open', () => $0.$server.popupOpenChanged(true))",getElement());		        
+        getElement().executeJs(
+                "this.$.popupOverlay.addEventListener('vaadin-overlay-close', () => $0.$server.popupOpenChanged(false))",
+                getElement());
+        getElement().executeJs(
+                "this.$.popupOverlay.addEventListener('vaadin-overlay-open', () => $0.$server.popupOpenChanged(true))",
+                getElement());
     }
 
-	@ClientCallable
-	private void popupOpenChanged(Boolean opened) {
-		fireEvent(new PopupOpenChangedEvent(this,opened,true));
-	}    
+    @ClientCallable
+    private void popupOpenChanged(Boolean opened) {
+        fireEvent(new PopupOpenChangedEvent(this, opened, true));
+    }
 
     /**
-     * Adds a listener for {@code PopupOpenChangedEvent} events fired by the webcomponent.
+     * Adds a listener for {@code PopupOpenChangedEvent} events fired by the
+     * webcomponent.
      *
-     * @param listener the listener
+     * @param listener
+     *            the listener
      * @return a {@link Registration} for removing the event listener
      */
-    public Registration addPopupOpenChangedEventListener(ComponentEventListener<PopupOpenChangedEvent> listener) {
+    public Registration addPopupOpenChangedEventListener(
+            ComponentEventListener<PopupOpenChangedEvent> listener) {
         return addListener(PopupOpenChangedEvent.class, listener);
-    }	
+    }
 
     /**
      * Showing popup, if not showed yet.
@@ -130,11 +134,23 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      */
     public void setFor(String id) {
         getModel().setFor(id);
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        getElement().appendChild(template);
+        // Attach <flow-component-renderer>
+        getElement().getNode()
+                .runWhenAttached(ui -> ui.beforeClientResponse(this,
+                        context -> attachComponentRenderer()));
+
+        String id = getModel().getFor();
         if (template.getProperty("innerHTML", false)) {
             if (id == null) {
-                getElement().callFunction("disconnectedCallback");
+                getElement().callJsFunction("disconnectedCallback");
             } else {
-                getElement().callFunction("connectedCallback");
+                System.out.println("attach: " + id);
+                getElement().callJsFunction("connectedCallback");
             }
         }
     }
@@ -276,15 +292,16 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
 
     public static class PopupOpenChangedEvent extends ComponentEvent<Popup> {
 
-    	private boolean opened;
+        private boolean opened;
 
-        public PopupOpenChangedEvent(Popup source, boolean opened, boolean fromClient) {
+        public PopupOpenChangedEvent(Popup source, boolean opened,
+                boolean fromClient) {
             super(source, fromClient);
             this.opened = opened;
         }
 
         public boolean isOpened() {
-        	return opened;
+            return opened;
         }
     }
 
