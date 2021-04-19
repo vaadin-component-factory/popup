@@ -87,14 +87,14 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      * Showing popup, if not showed yet.
      */
     public void show() {
-        getElement().callFunction("show");
+        getElement().callJsFunction("show");
     }
 
     /**
      * Hiding popup, if it's open.
      */
     public void hide() {
-        getElement().callFunction("hide");
+        getElement().callJsFunction("hide");
     }
 
     /**
@@ -149,7 +149,6 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
             if (id == null) {
                 getElement().callJsFunction("disconnectedCallback");
             } else {
-                System.out.println("attach: " + id);
                 getElement().callJsFunction("connectedCallback");
             }
         }
