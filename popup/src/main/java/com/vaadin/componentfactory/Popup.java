@@ -17,23 +17,15 @@
  */
 package com.vaadin.componentfactory;
 
-import java.util.Objects;
-
-import com.vaadin.flow.component.AttachEvent;
-import com.vaadin.flow.component.ClientCallable;
-
-
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.ComponentEvent;
-import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.flow.templatemodel.TemplateModel;
+
+import java.util.Objects;
 
 /**
  * Server-side component for the <code>vcf-popup</code> element.
@@ -42,7 +34,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
  */
 @Tag("vcf-popup")
 
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.2.4")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.2.5")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends PolymerTemplate<Popup.PopupModel> {
@@ -57,13 +49,8 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
 
         // Workaround for: https://github.com/vaadin/flow/issues/3496
         setOpened(false);
-        getElement().executeJs(
-                "this.$.popupOverlay.addEventListener('vaadin-overlay-close', () => $0.$server.popupOpenChanged(false))",
-                getElement());
-        getElement().executeJs(
-                "this.$.popupOverlay.addEventListener('vaadin-overlay-open', () => $0.$server.popupOpenChanged(true))",
-                getElement());
     }
+
 
     @ClientCallable
     private void popupOpenChanged(Boolean opened) {
@@ -100,7 +87,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
     /**
      * Opens popup. If popup is not attached yet will open it after attaching *
      *
-     * @param opened
+     * @param opened true to open the popup
      */
     public void setOpened(boolean opened) {
         getModel().setOpened(opened);
@@ -173,7 +160,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      * Should be set before binding to dom. setting after binding will make no
      * effect
      *
-     * @param close
+     * @param close true to close the popup automatically
      */
     public void setCloseOnClick(boolean close) {
         getModel().setCloseOnClick(close);
@@ -289,12 +276,14 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
         boolean isCloseOnClick();
     }
 
+    @DomEvent("popup-open-changed")
     public static class PopupOpenChangedEvent extends ComponentEvent<Popup> {
 
         private boolean opened;
 
-        public PopupOpenChangedEvent(Popup source, boolean opened,
-                boolean fromClient) {
+        public PopupOpenChangedEvent(Popup source,
+                                     boolean fromClient,
+                                     @EventData("event.detail.opened") boolean opened) {
             super(source, fromClient);
             this.opened = opened;
         }
