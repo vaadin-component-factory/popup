@@ -33,8 +33,7 @@ import java.util.Objects;
  * @author Vaadin Ltd
  */
 @Tag("vcf-popup")
-
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.2.5")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.2.6")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends PolymerTemplate<Popup.PopupModel> {
@@ -51,11 +50,6 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
         setOpened(false);
     }
 
-
-    @ClientCallable
-    private void popupOpenChanged(Boolean opened) {
-        fireEvent(new PopupOpenChangedEvent(this, opened, true));
-    }
 
     /**
      * Adds a listener for {@code PopupOpenChangedEvent} events fired by the
