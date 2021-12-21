@@ -6,7 +6,7 @@
     <groupId>com.vaadin.componentfactory</groupId>
     <artifactId>popup-demo</artifactId>
     <packaging>war</packaging>
-    <version>2.2.5</version>
+    <version>3.0.0</version>
 
     <name>Popup Demo</name>
 
@@ -18,8 +18,8 @@
 
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <vaadin.version>14.5.4</vaadin.version>
-        <flow.version>2.4.0</flow.version>
+        <vaadin.version>22.0.1</vaadin.version>
+        <flow.version>9.0.1</flow.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -85,6 +85,10 @@
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
+                <configuration>
+                	<pnpmEnable>true</pnpmEnable>
+                	<requireHomeNodeExec>true</requireHomeNodeExec>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -93,6 +97,21 @@
                     </execution>
                 </executions>
             </plugin>
+<!--             <plugin> -->
+<!--             	<groupId>com.github.eirslett</groupId> -->
+<!--             	<artifactId>frontend-maven-plugin</artifactId> -->
+<!--             	<version>1.7.6</version> -->
+<!--                  <executions> -->
+<!--                     <execution> -->
+<!--                         <goals> -->
+<!--                             <goal>install-node-and-npm</goal> -->
+<!--                         </goals> -->
+<!--                     </execution> -->
+<!--                 </executions> -->
+<!--                 <configuration> -->
+<!--                 	<nodeVersion>v16.13.0</nodeVersion> -->
+<!--                 </configuration>           	 -->
+<!--             </plugin> -->
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>

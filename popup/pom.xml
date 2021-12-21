@@ -6,7 +6,7 @@
     <groupId>com.vaadin.componentfactory</groupId>
     <artifactId>popup</artifactId>
     <packaging>jar</packaging>
-    <version>2.2.5</version>
+    <version>3.0.0</version>
 
     <name>Popup</name>
 
@@ -18,7 +18,7 @@
 
 
     <properties>
-        <vaadin.version>14.5.4</vaadin.version>
+        <vaadin.version>22.0.1</vaadin.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

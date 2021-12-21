@@ -33,7 +33,7 @@ import java.util.Objects;
  * @author Vaadin Ltd
  */
 @Tag("vcf-popup")
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.2.6")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "2.0.0")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends PolymerTemplate<Popup.PopupModel> {
