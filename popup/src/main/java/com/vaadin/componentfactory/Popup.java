@@ -20,10 +20,8 @@ package com.vaadin.componentfactory;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
-import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.shared.Registration;
-import com.vaadin.flow.templatemodel.TemplateModel;
 
 import java.util.Objects;
 
@@ -33,10 +31,10 @@ import java.util.Objects;
  * @author Vaadin Ltd
  */
 @Tag("vcf-popup")
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "2.0.0")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "3.0.0")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
-public class Popup extends PolymerTemplate<Popup.PopupModel> {
+public class Popup extends Component {
     private Element template;
     private Element container;
 
@@ -84,7 +82,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      * @param opened true to open the popup
      */
     public void setOpened(boolean opened) {
-        getModel().setOpened(opened);
+        getElement().setProperty("opened", opened);
         if (template.getProperty("innerHTML", false)) {
             if (opened) {
                 show();
@@ -99,8 +97,9 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      *
      * @return the {@code opened} property from the popup
      */
+    @Synchronize(value="popup-open-changed", property="detail.opened")
     public boolean isOpened() {
-        return getModel().isOpened();
+        return getElement().getProperty("opened", false);
     }
 
     /**
@@ -114,7 +113,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      *            remove the target
      */
     public void setFor(String id) {
-        getModel().setFor(id);
+        getElement().setProperty("for", id);
     }
 
     @Override
@@ -125,7 +124,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
                 .runWhenAttached(ui -> ui.beforeClientResponse(this,
                         context -> attachComponentRenderer()));
 
-        String id = getModel().getFor();
+        String id = getFor();
         if (template.getProperty("innerHTML", false)) {
             if (id == null) {
                 getElement().callJsFunction("disconnectedCallback");
@@ -143,7 +142,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      * @see #setFor(String)
      */
     public String getFor() {
-        return getModel().getFor();
+        return getElement().getProperty("for");
     }
 
     /**
@@ -157,7 +156,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      * @param close true to close the popup automatically
      */
     public void setCloseOnClick(boolean close) {
-        getModel().setCloseOnClick(close);
+        getElement().setProperty("closeOnClick", close);
     }
 
     /**
@@ -166,7 +165,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
      * @return closeOnClick parameter from popup
      */
     public boolean isCloseOnClick() {
-        return getModel().isCloseOnClick();
+        return getElement().getProperty("closeOnClick", false);
     }
 
     /**
@@ -250,24 +249,6 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
         if (isOpened()) {
             show();
         }
-    }
-
-    /**
-     * This model binds properties between java(Popup) and
-     * polymer(vcf-popup.html)
-     */
-    public interface PopupModel extends TemplateModel {
-        void setOpened(boolean opened);
-
-        boolean isOpened();
-
-        void setFor(String id);
-
-        String getFor();
-
-        void setCloseOnClick(boolean close);
-
-        boolean isCloseOnClick();
     }
 
     @DomEvent("popup-open-changed")
