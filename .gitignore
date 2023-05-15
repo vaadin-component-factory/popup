@@ -6,3 +6,4 @@ target/
 **/package-lock.json
 **/bower_components/
 /.settings/
+/popup-demo/.pnpmfile.cjs

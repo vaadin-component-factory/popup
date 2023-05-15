@@ -4,12 +4,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.vaadin.componentfactory.Popup;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.lumo.LumoIcon;
 
 @Route("popup")
 public class PopupView extends DemoView {
@@ -21,6 +25,34 @@ public class PopupView extends DemoView {
         addOpenedExample();
         addShowHideExample();
         addUnbindExample();
+        addHeaderAndFooterExample();
+    }
+
+    private void addHeaderAndFooterExample() {
+        Button button = new Button("Push Me");
+        button.setId("push-me-header-and-footer");
+
+        VerticalLayout content = new VerticalLayout();
+        content.add(new Span("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam at arcu a est sollicitudin euismod. Nunc tincidunt ante vitae massa. Et harum quidem rerum facilis est et expedita distinctio. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Duis viverra diam non justo. Nulla est"));
+        content.setMaxWidth("300px");
+        content.setMaxHeight("200px");
+
+        Popup popup = new Popup();
+        popup.setFor(button.getId().orElse(null));
+        popup.add(content);
+        popup.setHeaderTitle("This is title");
+
+        Button closeBtn = new Button(LumoIcon.CROSS.create());
+        closeBtn.addClickListener(e -> popup.hide());
+        closeBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        popup.getHeader().add(closeBtn);
+
+        Button cancel = new Button("Cancel");
+        Button apply = new Button("Apply");
+        apply.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        popup.getFooter().add(cancel, apply);
+
+        addCard("Popup with header and footer", button, popup);
     }
 
     private void addBasicExample() {
