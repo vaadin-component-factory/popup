@@ -1,0 +1,9 @@
+:host([theme~="custom-popup-style"]) [part="header"] {
+    border-bottom: 1px black solid;
+    background-color: #b3d4fc;
+}
+
+:host([theme~="custom-popup-style"]) [part="footer"] {
+    border-top: 1px black solid;
+    background-color: #b3d4fc;
+}

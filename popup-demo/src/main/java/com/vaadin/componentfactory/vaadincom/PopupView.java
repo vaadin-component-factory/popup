@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.vaadin.componentfactory.Popup;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -16,6 +17,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoIcon;
 
 @Route("popup")
+@CssImport(value = "./styles/custom-popup-style.css", themeFor = "vcf-popup-overlay")
 public class PopupView extends DemoView {
 
     @Override
@@ -26,6 +28,30 @@ public class PopupView extends DemoView {
         addShowHideExample();
         addUnbindExample();
         addHeaderAndFooterExample();
+        addStyledHeaderAndFooterExample();
+    }
+
+    private void addStyledHeaderAndFooterExample() {
+        Button button = new Button("Push Me");
+        button.setId("push-me-header-and-footer");
+
+        VerticalLayout content = new VerticalLayout();
+        content.add(new Span("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam at arcu a est sollicitudin euismod. Nunc tincidunt ante vitae massa. Et harum quidem rerum facilis est et expedita distinctio. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus"));
+        content.setMaxWidth("400px");
+
+        Popup popup = new Popup();
+        popup.setFor(button.getId().orElse(null));
+        popup.add(content);
+        popup.setHeaderTitle("This is title");
+
+        Button cancel = new Button("Cancel");
+        Button apply = new Button("Apply");
+        apply.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        popup.getFooter().add(cancel, apply);
+
+        popup.setThemeName("custom-popup-style");
+
+        addCard("Popup with styled header and footer", button, popup);
     }
 
     private void addHeaderAndFooterExample() {
