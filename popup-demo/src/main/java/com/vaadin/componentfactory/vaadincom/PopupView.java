@@ -29,6 +29,32 @@ public class PopupView extends DemoView {
         addUnbindExample();
         addHeaderAndFooterExample();
         addStyledHeaderAndFooterExample();
+        addCloseOnScrollExample();
+    }
+
+    private void addCloseOnScrollExample() {
+        Button button = new Button("Push Me");
+        button.setId("push-me-scroll");
+
+        Popup popup = new Popup();
+        popup.setFor(button.getId().orElse(null));
+        popup.setCloseOnScroll(true);
+        VerticalLayout content = new VerticalLayout();
+        content.add(new Span("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam at arcu a est sollicitudin euismod. Nunc tincidunt ante vitae massa. Et harum quidem rerum facilis est et expedita distinctio. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus"));
+        content.setMaxWidth("400px");
+        popup.add(content);
+
+        Div closeOnScrollStatus = new Div();
+        closeOnScrollStatus.setText("Close on scroll: " + popup.isCloseOnScroll());
+        Button toggleCloseOnScroll = new Button("Toggle close on scroll");
+        toggleCloseOnScroll.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        toggleCloseOnScroll.addClickListener(buttonClickEvent -> {
+            popup.setCloseOnScroll(!popup.isCloseOnScroll());
+            closeOnScrollStatus.setText("Close on scroll: " + popup.isCloseOnScroll());
+        });
+
+        addCard("Popup with close on scroll", button, popup,
+                closeOnScrollStatus, toggleCloseOnScroll);
     }
 
     private void addStyledHeaderAndFooterExample() {

@@ -180,6 +180,25 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
     }
 
     /**
+     * Sets attribute closeOnScroll. Default if false. If set to true then popup
+     * will be closed when content outside of the popup is scrolled.
+     *
+     * @param close true to close the popup automatically on scroll
+     */
+    public void setCloseOnScroll(boolean close) {
+        getModel().setCloseOnScroll(close);
+    }
+
+    /**
+     * gets closeOnScroll parameter from popup
+     *
+     * @return closeOnScroll parameter from popup
+     */
+    public boolean isCloseOnScroll() {
+        return getModel().isCloseOnScroll();
+    }
+
+    /**
      * Adds the given components into this popup.
      * <p>
      * The elements in the DOM will not be children of the {@code <vcf-popup>}
@@ -451,6 +470,10 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
         void setCloseOnClick(boolean close);
 
         boolean isCloseOnClick();
+
+        void setCloseOnScroll(boolean close);
+
+        boolean isCloseOnScroll();
     }
 
     @DomEvent("popup-open-changed")
