@@ -182,6 +182,8 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
     /**
      * Sets attribute closeOnScroll. Default if false. If set to true then popup
      * will be closed when content outside of the popup is scrolled.
+     * <p>
+     * Note: The popup has to be modeless in order for closeOnScroll to have any effect. See {@link Popup#setModeless(boolean)}
      *
      * @param close true to close the popup automatically on scroll
      */
@@ -196,6 +198,26 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
      */
     public boolean isCloseOnScroll() {
         return getModel().isCloseOnScroll();
+    }
+
+    /**
+     * Sets whether popup will open modal or modeless.
+     * <p>
+     * A modeless popup allows user to interact with the interface under it and won't be closed by pressing the ESC key.
+     *
+     * @param modeless {@code true} to make the popup modeless, {@code false} to display the popup modal.
+     */
+    public void setModeless(boolean modeless) {
+        getModel().setModeless(modeless);
+    }
+
+    /**
+     * Gets whether component is set as modal or modeless popup.
+     *
+     * @return {@code false} if modal popup (default), {@code true} otherwise.
+     */
+    public boolean isModeless() {
+        return getModel().isModeless();
     }
 
     /**
@@ -474,6 +496,10 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
         void setCloseOnScroll(boolean close);
 
         boolean isCloseOnScroll();
+
+        void setModeless(boolean modeless);
+
+        boolean isModeless();
     }
 
     @DomEvent("popup-open-changed")

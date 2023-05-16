@@ -30,6 +30,7 @@ public class PopupView extends DemoView {
         addHeaderAndFooterExample();
         addStyledHeaderAndFooterExample();
         addCloseOnScrollExample();
+        addModelessExample();
     }
 
     private void addCloseOnScrollExample() {
@@ -39,6 +40,7 @@ public class PopupView extends DemoView {
         Popup popup = new Popup();
         popup.setFor(button.getId().orElse(null));
         popup.setCloseOnScroll(true);
+        popup.setModeless(true);
         VerticalLayout content = new VerticalLayout();
         content.add(new Span("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam at arcu a est sollicitudin euismod. Nunc tincidunt ante vitae massa. Et harum quidem rerum facilis est et expedita distinctio. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus"));
         content.setMaxWidth("400px");
@@ -131,6 +133,24 @@ public class PopupView extends DemoView {
         });
         
         addCard("Basic popup usage", button, popup, closeOnClickStatus, eventStatus);
+    }
+
+    private void addModelessExample() {
+        Button button = new Button("Push Me");
+        button.setId("push-me-modeless");
+
+        Popup popup = new Popup();
+        popup.setModeless(true);
+        popup.setFor(button.getId().orElse(null));
+        VerticalLayout content = new VerticalLayout();
+        content.add(new Span("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam at arcu a est sollicitudin euismod. Nunc tincidunt ante vitae massa. Et harum quidem rerum facilis est et expedita distinctio. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus"));
+        content.setMaxWidth("400px");
+        popup.add(content);
+
+        Div modelessStatus = new Div();
+        modelessStatus.setText("Is modeless " + popup.isModeless());
+
+        addCard("Modeless example", button, popup, modelessStatus);
     }
 
     private void addCloseOnClickExample() {
