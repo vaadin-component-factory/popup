@@ -150,7 +150,15 @@ public class PopupView extends DemoView {
         Div modelessStatus = new Div();
         modelessStatus.setText("Is modeless " + popup.isModeless());
 
-        addCard("Modeless example", button, popup, modelessStatus);
+        Div eventStatus = new Div();
+        popup.addPopupOpenChangedEventListener(event -> {
+            if (event.isOpened())
+                eventStatus.setText("Popup opened");
+            else
+                eventStatus.setText("Popup closed");
+        });
+
+        addCard("Modeless example", button, popup, modelessStatus, eventStatus);
     }
 
     private void addCloseOnClickExample() {
