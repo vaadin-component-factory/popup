@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.vaadin.componentfactory.ButtonWithPopupRenderer;
 import com.vaadin.componentfactory.ComponentWithPopupRenderer;
 import com.vaadin.componentfactory.Popup;
 import com.vaadin.flow.component.Component;
@@ -13,6 +12,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoIcon;
@@ -20,11 +20,30 @@ import com.vaadin.flow.theme.lumo.LumoIcon;
 @Route("popup-grid")
 public class PopupGridView extends VerticalLayout {
 
+    private boolean closePopupsOnScroll = true;
+
     public PopupGridView() {
-        initGrid();
+        addGrid();
+        addCloseOnScrollToggleButton();
     }
 
-    private void initGrid() {
+    private void addCloseOnScrollToggleButton() {
+        Span status = new Span("closeOnScroll: " + this.closePopupsOnScroll);
+
+        Button button = new Button("Toggle close popup on scroll");
+        button.addClickListener(event -> {
+            this.closePopupsOnScroll = !this.closePopupsOnScroll;
+            status.setText("closeOnScroll: " + this.closePopupsOnScroll);
+        });
+
+        final HorizontalLayout layout = new HorizontalLayout(button, status);
+        layout.setAlignItems(Alignment.CENTER);
+        add(layout);
+        add("Note that only popups in ID column are affected, because they are created dynamically when content is clicked.");
+    }
+
+    private void addGrid() {
+        add("Click on content of 'ID' and 'First name' columns to open the popup");
         Grid<Person> grid = createGrid();
 
         addIdWithPopupColumn(grid);
@@ -39,9 +58,9 @@ public class PopupGridView extends VerticalLayout {
         grid.addColumn(createButtonWithPopupRenderer()).setHeader("ID");
     }
 
-    private ButtonWithPopupRenderer<Person> createButtonWithPopupRenderer() {
-        return new ButtonWithPopupRenderer<>(
-                this::getPersonIdAsString,
+    private ComponentWithPopupRenderer<Person> createButtonWithPopupRenderer() {
+        return new ComponentWithPopupRenderer<>(
+                this::createButtonWithPersonId,
                 this::createPopupForPersonId
         );
     }
@@ -49,12 +68,13 @@ public class PopupGridView extends VerticalLayout {
     private Popup createPopupForPersonId(Person item) {
         Popup popup = new Popup();
         popup.setModeless(true);
-        popup.setCloseOnScroll(true);
+        popup.setCloseOnScroll(this.closePopupsOnScroll);
         popup.setHeaderTitle(String.format("Popup %d", item.getId()));
         popup.getHeader().add(createPopupCloseButton(popup));
 
         VerticalLayout content = new VerticalLayout();
         content.add(new Span(String.format("Popup %d content", item.getId())));
+        content.add("Will close on scroll?: " + this.closePopupsOnScroll);
         popup.add(content);
 
         return popup;
@@ -67,8 +87,10 @@ public class PopupGridView extends VerticalLayout {
         return closeBtn;
     }
 
-    private String getPersonIdAsString(Person person) {
-        return String.valueOf(person.getId());
+    private Component createButtonWithPersonId(Person person) {
+        Button button = new Button(String.valueOf(person.getId()));
+        button.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        return button;
     }
 
     private void addLastNameColumn(Grid<Person> grid) {
