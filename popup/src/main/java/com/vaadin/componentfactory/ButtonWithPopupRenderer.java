@@ -35,7 +35,6 @@ public class ButtonWithPopupRenderer<ITEM> extends ComponentWithPopupRenderer<IT
 
     protected final ValueProvider<ITEM, String> buttonLabelGenerator;
 
-
     /**
      * Creates a new renderer instance using the provided generators.
      *
@@ -44,23 +43,30 @@ public class ButtonWithPopupRenderer<ITEM> extends ComponentWithPopupRenderer<IT
      */
     public ButtonWithPopupRenderer(ValueProvider<ITEM, String> buttonLabelGenerator,
                                    PopupGenerator<ITEM> itemPopupGenerator) {
-        super(null, itemPopupGenerator);
+        super(itemPopupGenerator);
         this.buttonLabelGenerator = buttonLabelGenerator;
     }
 
     @Override
-    protected Component addComponentToContainer(ITEM item, HasComponents container) {
+    public Component createComponent(ITEM item) {
+        HasComponents container = createWrappingContainer();
+
+        final Button button = createButton(item);
+        button.addClickListener(clickEvent -> generateAndShowPopup(item, container, button));
+        container.add(button);
+
+        return (Component) container;
+    }
+
+    protected Button createButton(ITEM item) {
         Button button = new Button(buttonLabelGenerator.apply(item));
         button.setId(createUniqueId());
         button.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
-        button.addClickListener(clickEvent -> generateAndShowPopup(item, container, button));
-        container.add(button);
         return button;
     }
 
     private void generateAndShowPopup(ITEM item, HasComponents container, Button target) {
-        Popup popup = itemPopupGenerator.apply(item);
-        popup.setFor(target.getId().orElse(null));
+        Popup popup = createPopup(item, target);
         popup.addPopupOpenChangedEventListener(event -> {
             // remove the popup from the DOM tree when it's closed
             if (!event.isOpened()) {
@@ -69,10 +75,5 @@ public class ButtonWithPopupRenderer<ITEM> extends ComponentWithPopupRenderer<IT
         });
         container.add(popup);
         popup.show();
-    }
-
-    @Override
-    protected void addPopupToContainer(ITEM item, HasComponents container, Component component) {
-        // noop - popup is attached to the DOM only when a button is clicked
     }
 }
