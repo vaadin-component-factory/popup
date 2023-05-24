@@ -22,6 +22,7 @@ import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.function.SerializableFunction;
+import com.vaadin.flow.function.SerializableSupplier;
 
 /**
  * A renderer that renders a component provided by {@code componentFunction}.
@@ -53,6 +54,7 @@ public class ComponentWithPopupRenderer<ITEM> extends ComponentRenderer<Componen
      */
     public ComponentWithPopupRenderer(SerializableFunction<ITEM, ? extends Component> componentFunction,
                                       PopupGenerator<ITEM> itemPopupGenerator) {
+        super((SerializableSupplier<Component>) null);
         this.itemPopupGenerator = itemPopupGenerator;
         this.componentFunction = componentFunction;
     }
