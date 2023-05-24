@@ -27,6 +27,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.DomEvent;
 import com.vaadin.flow.component.EventData;
 import com.vaadin.flow.component.HasTheme;
+import com.vaadin.flow.component.Synchronize;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -187,7 +188,7 @@ public class Popup extends Component implements HasTheme {
      * @param close true to close the popup automatically on scroll
      */
     public void setCloseOnScroll(boolean close) {
-        getModel().setCloseOnScroll(close);
+        getElement().setProperty("closeOnScroll", close);
     }
 
     /**
@@ -196,7 +197,7 @@ public class Popup extends Component implements HasTheme {
      * @return closeOnScroll parameter from popup
      */
     public boolean isCloseOnScroll() {
-        return getModel().isCloseOnScroll();
+        return getElement().getProperty("closeOnScroll", false);
     }
 
     /**
@@ -207,7 +208,7 @@ public class Popup extends Component implements HasTheme {
      * @param modeless {@code true} to make the popup modeless, {@code false} to display the popup modal.
      */
     public void setModeless(boolean modeless) {
-        getModel().setModeless(modeless);
+        getElement().setProperty("modeless", modeless);
     }
 
     /**
@@ -216,7 +217,7 @@ public class Popup extends Component implements HasTheme {
      * @return {@code false} if modal popup (default), {@code true} otherwise.
      */
     public boolean isModeless() {
-        return getModel().isModeless();
+        return getElement().getProperty("modeless", false);
     }
 
     /**
