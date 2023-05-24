@@ -1,4 +1,4 @@
-# Component Factory Popup for Vaadin 10+
+# Component Factory Popup for Vaadin 23+
 
 This is server-side component of [&lt;vcf-popup&gt;](https://github.com/vaadin-component-factory/vcf-popup) Web Component.
 It provides a popup that can be bound to element by id, and then be opened by clicking on target element. 
@@ -38,6 +38,25 @@ Setting the parameter `opened` to `true` will open the popup. In case the popup 
     popup.setOpened(true);
 ```
 
+Popup can be set modal or modeless via the `setModeless()` method.
+```
+    popup.setModeless(true);
+```
+
+If modeless, you can also set up the Popup to close automatically when the content outside the Popup scrolls (handy when used in Grids, for example).
+```
+    popup.setModeless(true);
+    popup.setCloseOnScroll(true);
+```
+
+There are convenient methods to set the Popup header title, to add components to the header or the footer:
+```
+    popup.setHeaderTitle("This is title");
+    ...
+    popup.getHeader().add(closeBtn);
+    ...
+    popup.getFooter().add(cancelBtn, applyBtn);
+```
 
 ## Demo
 To run the demo, go to `popup-demo/` subfolder and run `mvn jetty:run`.

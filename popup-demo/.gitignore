@@ -1,5 +1,15 @@
 /.settings/
 /node_modules/
 /package.json
+/package-lock.json
+/pnpm-lock.yaml
+/pnpmfile.js
+tsconfig.json
+types.d.ts
+vite.config.ts
+vite.generated.ts
+.npmrc
 /webpack.config.js
 /webpack.generated.js
+/frontend/generated
+/frontend/index.html
