@@ -41,7 +41,7 @@ import com.vaadin.flow.shared.Registration;
  * @author Vaadin Ltd
  */
 @Tag("vcf-popup")
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "3.0.0")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "24.0.0")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends Component implements HasTheme {
