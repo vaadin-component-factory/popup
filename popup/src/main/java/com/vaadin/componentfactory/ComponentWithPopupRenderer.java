@@ -82,7 +82,17 @@ public class ComponentWithPopupRenderer<ITEM> extends ComponentRenderer<Componen
     }
 
     protected HasComponents createWrappingContainer() {
-        return new Div();
+        final Div container = new Div();
+
+        // delegate calls to click() to the firstChild, if it exists (e.g. a button)
+        // This enables opening the Popup using a spacebar in Grid when the cell has a focus.
+        container.getElement().executeJs("this.click = function () {\n" +
+                "      if (!this.popupHasBeenJustClosed && this.firstChild && typeof this.firstChild.click === 'function') {\n" +
+                "        this.firstChild.click();\n" +
+                "      }\n" +
+                "    }");
+
+        return container;
     }
 
     protected String createUniqueId() {
@@ -95,6 +105,11 @@ public class ComponentWithPopupRenderer<ITEM> extends ComponentRenderer<Componen
             // remove the popup from the DOM tree when it's closed
             if (!event.isOpened()) {
                 container.remove(popup);
+                // to prevent recreating and reopening the popup in the current event processing cycle
+                // which happens when the popup is closed by pressing a close-popup-button with a spacebar.
+                // Couldn't come with a better (and still reliable) solution than to wait for some time.
+                container.getElement().executeJs("this.popupHasBeenJustClosed = true;" +
+                        "setTimeout(() => {this.popupHasBeenJustClosed = false;}, 150);");
             }
         });
         container.add(popup);
