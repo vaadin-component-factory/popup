@@ -42,7 +42,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
  * @author Vaadin Ltd
  */
 @Tag("vcf-popup")
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "23.3.0")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "23.3.1")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme {
