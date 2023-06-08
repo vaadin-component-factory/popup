@@ -1,7 +1,7 @@
 {
  "packageJsonDependencies": {
   "@polymer/polymer": "3.5.1",
-  "@vaadin-component-factory/vcf-popup": "3.0.0",
+  "@vaadin-component-factory/vcf-popup": "24.0.1",
   "@vaadin/accordion": "24.0.3",
   "@vaadin/app-layout": "24.0.3",
   "@vaadin/avatar": "24.0.3",
@@ -68,8 +68,10 @@
   "lit": "2.6.1"
  },
  "npmModules": {
-  "@lit/reactive-element": "1.6.1",
+  "@lit/reactive-element": "1.6.2",
+  "@polymer/iron-media-query": "3.0.1",
   "@polymer/polymer": "3.5.1",
+  "@vaadin-component-factory/vcf-popup": "24.0.1",
   "@vaadin/accordion": "24.0.3",
   "@vaadin/app-layout": "24.0.3",
   "@vaadin/avatar": "24.0.3",
@@ -128,10 +130,11 @@
   "@vaadin/vaadin-usage-statistics": "2.1.2",
   "@vaadin/vertical-layout": "24.0.3",
   "@vaadin/virtual-list": "24.0.3",
+  "@webcomponents/shadycss": "1.11.2",
   "date-fns": "2.29.3",
   "lit-element": "3.3.2",
   "lit-html": "2.7.4",
-  "tslib": "2.5.2"
+  "tslib": "2.5.3"
  },
  "bundleImports": [
   "@vaadin/vaadin-themable-mixin",
@@ -244,8 +247,8 @@
  },
  "themeJsonContents": {},
  "entryScripts": [
-  "VAADIN/build/indexhtml-9ac3a5b3.js"
+  "VAADIN/build/indexhtml-12b80eea.js"
  ],
  "webComponents": [],
- "packageJsonHash": "607367c66df0bf64fdac88e1ff109bc6605ae5ccdf22105184d088497838eb84"
+ "packageJsonHash": "d1cbb33168f2958a3550e851c8608865f9febf664b1181e96f8c92fb6cc9d05f"
 }

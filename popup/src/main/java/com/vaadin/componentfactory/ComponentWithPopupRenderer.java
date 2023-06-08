@@ -86,13 +86,13 @@ public class ComponentWithPopupRenderer<ITEM> extends ComponentRenderer<Componen
     protected HasComponents createWrappingContainer() {
         final Div container = new Div();
 
-        // delegate calls to click() to the firstChild, if it exists (e.g. a button)
+        // listen on mouse click events and delegate to the firstChild, if it exists (e.g. a button)
         // This enables opening the Popup using a spacebar in Grid when the cell has a focus.
-        container.getElement().executeJs("this.click = function () {\n" +
+        container.getElement().executeJs("this.addEventListener('click', function () {\n" +
                 "      if (!this.popupHasBeenJustClosed && this.firstChild && typeof this.firstChild.click === 'function') {\n" +
                 "        this.firstChild.click();\n" +
                 "      }\n" +
-                "    }");
+                "    })");
 
         return container;
     }
