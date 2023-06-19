@@ -3,6 +3,7 @@ package com.vaadin.componentfactory.vaadincom;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.vaadin.componentfactory.Popup;
+import com.vaadin.componentfactory.PopupPosition;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -27,10 +28,34 @@ public class PopupView extends DemoView {
         addOpenedExample();
         addShowHideExample();
         addUnbindExample();
+        addPositionRightExample();
         addHeaderAndFooterExample();
         addStyledHeaderAndFooterExample();
         addCloseOnScrollExample();
         addModelessExample();
+    }
+
+    private void addPositionRightExample() {
+        Button button = new Button("Click me");
+        button.setId("right-position-button");
+
+        VerticalLayout content = new VerticalLayout();
+        content.add(new Span("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam at arcu a est sollicitudin euismod. Nunc tincidunt ante vitae massa. Et harum quidem rerum facilis est et expedita distinctio. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Duis viverra diam non justo. Nulla est"));
+        content.setMaxWidth("300px");
+        content.setMaxHeight("200px");
+
+        Popup popup = new Popup();
+        popup.setFor(button.getId().orElse(null));
+        popup.setPosition(PopupPosition.END);
+        popup.add(content);
+        popup.setHeaderTitle("This is title");
+
+        Button closeBtn = new Button(LumoIcon.CROSS.create());
+        closeBtn.addClickListener(e -> popup.hide());
+        closeBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        popup.getHeader().add(closeBtn);
+
+        addCard("Popup positioned to the right", button, popup);
     }
 
     private void addCloseOnScrollExample() {

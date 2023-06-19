@@ -157,6 +157,23 @@ public class Popup extends Component implements HasTheme {
     }
 
     /**
+     * Sets the preferred position of this popup in relation to the target component set by {@link Popup#setFor(String)}.
+     * See {@link PopupPosition} for detailed description of positioning options.
+     */
+    public void setPosition(PopupPosition position) {
+        getElement().setProperty("position", position.getPropertyValue());
+    }
+
+    /**
+     * Gets the preferred position of his popup in relation to the target element.
+     * Note that the actual position can be different, depending on the space available on the screen.
+     * See {@link PopupPosition} for detailed description of positioning options.
+     */
+    public PopupPosition getPosition() {
+        return PopupPosition.valueOf(getElement().getProperty("position", PopupPosition.BOTTOM.getPropertyValue()));
+    }
+
+    /**
      * Sets parameter closeOnClick. Default if false. If set to true then popup
      * will be closed when clicking on it and on clicking outside popup. If set
      * to false then popup will be closed when clicking outside popup
