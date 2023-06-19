@@ -157,6 +157,23 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
     }
 
     /**
+     * Sets the preferred position of this popup in relation to the target component set by {@link Popup#setFor(String)}.
+     * See {@link PopupPosition} for detailed description of positioning options.
+     */
+    public void setPosition(PopupPosition position) {
+        getModel().setPosition(position.getPropertyValue());
+    }
+
+    /**
+     * Gets the preferred position of his popup in relation to the target element.
+     * Note that the actual position can be different, depending on the space available on the screen.
+     * See {@link PopupPosition} for detailed description of positioning options.
+     */
+    public PopupPosition getPosition() {
+        return PopupPosition.valueOf(getModel().getPosition());
+    }
+
+    /**
      * Sets parameter closeOnClick. Default if false. If set to true then popup
      * will be closed when clicking on it and on clicking outside popup. If set
      * to false then popup will be closed when clicking outside popup
@@ -500,6 +517,10 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
         void setModeless(boolean modeless);
 
         boolean isModeless();
+
+        void setPosition(String position);
+
+        String getPosition();
     }
 
     @DomEvent("popup-open-changed")
