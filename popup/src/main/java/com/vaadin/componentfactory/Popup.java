@@ -26,12 +26,12 @@ import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.DomEvent;
 import com.vaadin.flow.component.EventData;
-import com.vaadin.flow.component.HasTheme;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.shared.HasThemeVariant;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.flow.templatemodel.TemplateModel;
@@ -45,7 +45,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 @NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "23.3.1")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
-public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme {
+public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasThemeVariant<PopupVariant> {
     private Element template;
     private Element container;
 

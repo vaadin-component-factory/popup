@@ -4,6 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.vaadin.componentfactory.Popup;
 import com.vaadin.componentfactory.PopupPosition;
+import com.vaadin.componentfactory.PopupVariant;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -25,6 +26,7 @@ public class PopupView extends DemoView {
     protected void initView() {
         addBasicExample();
         addCloseOnClickExample();
+        addPointerArrowThemeExample();
         addOpenedExample();
         addShowHideExample();
         addUnbindExample();
@@ -33,6 +35,41 @@ public class PopupView extends DemoView {
         addStyledHeaderAndFooterExample();
         addCloseOnScrollExample();
         addModelessExample();
+    }
+
+    private void addPointerArrowThemeExample() {
+
+        Button button = new Button("Popup position bottom");
+        button.setId("pointer-arrow-bottom");
+
+        VerticalLayout content = new VerticalLayout();
+        content.add(new Span("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam at arcu a est sollicitudin euismod. Nunc tincidunt ante vitae massa. Et harum quidem rerum facilis est et expedita distinctio. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Duis viverra diam non justo. Nulla est"));
+        content.setMaxWidth("300px");
+        content.setMaxHeight("200px");
+
+        Popup popup = new Popup();
+        popup.setFor(button.getId().orElse(null));
+        popup.setPosition(PopupPosition.BOTTOM);
+        popup.addThemeVariants(PopupVariant.LUMO_POINTER_ARROW);
+        popup.add(content);
+        popup.setHeaderTitle("This is title");
+
+        Button button2 = new Button("Popup position right");
+        button2.setId("pointer-arrow-right");
+
+        VerticalLayout content2 = new VerticalLayout();
+        content2.add(new Span("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam at arcu a est sollicitudin euismod. Nunc tincidunt ante vitae massa. Et harum quidem rerum facilis est et expedita distinctio. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Duis viverra diam non justo. Nulla est"));
+        content2.setMaxWidth("300px");
+        content2.setMaxHeight("200px");
+
+        Popup popup2 = new Popup();
+        popup2.setFor(button2.getId().orElse(null));
+        popup2.setPosition(PopupPosition.END);
+        popup2.addThemeVariants(PopupVariant.LUMO_POINTER_ARROW);
+        popup2.add(content2);
+        popup2.setHeaderTitle("This is title");
+
+        addCard("Popup with pointer arrow", button, popup, button2, popup2);
     }
 
     private void addPositionRightExample() {
