@@ -1,5 +1,7 @@
 package com.vaadin.componentfactory;
 
+import java.util.Arrays;
+
 /**
  * Popup positioning options.
  */
@@ -29,4 +31,11 @@ public enum PopupPosition {
     public String getPropertyValue() {
         return propertyValue;
     }
+
+    public static PopupPosition fromPropertyValue(String propertyValue) {
+        return Arrays.stream(PopupPosition.values())
+                .filter(popupPosition -> popupPosition.getPropertyValue().equals(propertyValue))
+                .findFirst().orElse(null);
+    }
+
 }

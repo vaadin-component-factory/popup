@@ -170,7 +170,29 @@ public class Popup extends Component implements HasThemeVariant<PopupVariant> {
      * See {@link PopupPosition} for detailed description of positioning options.
      */
     public PopupPosition getPosition() {
-        return PopupPosition.valueOf(getElement().getProperty("position", PopupPosition.BOTTOM.getPropertyValue()));
+        return PopupPosition.fromPropertyValue(getElement().getProperty("position", PopupPosition.BOTTOM.getPropertyValue()));
+    }
+
+
+    /**
+     * Sets the alignment of this popup in relation to the target component set by {@link Popup#setFor(String)}.
+     * See {@link PopupAlignment} for detailed description of alignment options.
+     */
+    public void setAlignment(PopupAlignment alignment) {
+        if (alignment != null) {
+            getElement().setProperty("alignment", alignment.getPropertyValue());
+        } else {
+            getElement().setProperty("alignment", null);
+        }
+    }
+
+    /**
+     * Gets the alignment of his popup in relation to the target element.
+     * Note that the actual alignment and position of the popup can be different, depending on the space available on the screen.
+     * See {@link PopupAlignment} for detailed description of positioning options.
+     */
+    public PopupAlignment getAlignment() {
+        return PopupAlignment.fromPropertyValue(getElement().getProperty("alignment"));
     }
 
     /**
