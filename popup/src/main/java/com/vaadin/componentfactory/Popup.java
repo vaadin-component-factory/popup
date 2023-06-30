@@ -170,7 +170,29 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
      * See {@link PopupPosition} for detailed description of positioning options.
      */
     public PopupPosition getPosition() {
-        return PopupPosition.valueOf(getModel().getPosition());
+        return PopupPosition.fromPropertyValue(getModel().getPosition());
+    }
+
+
+    /**
+     * Sets the alignment of this popup in relation to the target component set by {@link Popup#setFor(String)}.
+     * See {@link PopupAlignment} for detailed description of alignment options.
+     */
+    public void setAlignment(PopupAlignment alignment) {
+        if (alignment != null) {
+            getModel().setAlignment(alignment.getPropertyValue());
+        } else {
+            getModel().setAlignment(null);
+        }
+    }
+
+    /**
+     * Gets the alignment of his popup in relation to the target element.
+     * Note that the actual alignment and position of the popup can be different, depending on the space available on the screen.
+     * See {@link PopupAlignment} for detailed description of positioning options.
+     */
+    public PopupAlignment getAlignment() {
+        return PopupAlignment.fromPropertyValue(getModel().getAlignment());
     }
 
     /**
@@ -521,6 +543,10 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
         void setPosition(String position);
 
         String getPosition();
+
+        void setAlignment(String alignment);
+
+        String getAlignment();
     }
 
     @DomEvent("popup-open-changed")

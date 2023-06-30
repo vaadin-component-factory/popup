@@ -3,10 +3,12 @@ package com.vaadin.componentfactory.vaadincom;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.vaadin.componentfactory.Popup;
+import com.vaadin.componentfactory.PopupAlignment;
 import com.vaadin.componentfactory.PopupPosition;
 import com.vaadin.componentfactory.PopupVariant;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
@@ -14,6 +16,8 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoIcon;
@@ -30,7 +34,7 @@ public class PopupView extends DemoView {
         addOpenedExample();
         addShowHideExample();
         addUnbindExample();
-        addPositionRightExample();
+        addPositioningExample();
         addHeaderAndFooterExample();
         addStyledHeaderAndFooterExample();
         addCloseOnScrollExample();
@@ -72,7 +76,7 @@ public class PopupView extends DemoView {
         addCard("Popup with pointer arrow", button, popup, button2, popup2);
     }
 
-    private void addPositionRightExample() {
+    private void addPositioningExample() {
         Button button = new Button("Click me");
         button.setId("right-position-button");
 
@@ -83,7 +87,6 @@ public class PopupView extends DemoView {
 
         Popup popup = new Popup();
         popup.setFor(button.getId().orElse(null));
-        popup.setPosition(PopupPosition.END);
         popup.add(content);
         popup.setHeaderTitle("This is title");
 
@@ -92,7 +95,38 @@ public class PopupView extends DemoView {
         closeBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         popup.getHeader().add(closeBtn);
 
-        addCard("Popup positioned to the right", button, popup);
+        RadioButtonGroup<PopupPosition> popupPosition = new RadioButtonGroup<>();
+        popupPosition.setLabel("Popup position");
+        popupPosition.setItems(PopupPosition.values());
+        popupPosition.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+        popupPosition.setItemLabelGenerator(item -> {
+            switch (item) {
+                case BOTTOM:
+                    return "To the bottom of the target element";
+                case END:
+                    return "To the end of the target element";
+                default:
+                    return "Unknown";
+            }
+        });
+        popupPosition.setValue(PopupPosition.BOTTOM);
+        popupPosition.addValueChangeListener(event -> popup.setPosition(event.getValue()));
+
+        Span currentAlignment = new Span();
+
+        Checkbox alignCenter = new Checkbox();
+        alignCenter.setLabel("Align to the center");
+        alignCenter.addValueChangeListener(event -> {
+            if (event.getValue()) {
+                popup.setAlignment(PopupAlignment.CENTER);
+            } else {
+                popup.setAlignment(null);
+            }
+
+            currentAlignment.setText("Current alignment: " + popup.getAlignment());
+        });
+
+        addCard("Popup positioning test", button, popup, popupPosition, alignCenter, currentAlignment);
     }
 
     private void addCloseOnScrollExample() {
@@ -188,12 +222,12 @@ public class PopupView extends DemoView {
 
         Div eventStatus = new Div();
         popup.addPopupOpenChangedEventListener(event -> {
-        	if (event.isOpened())
-        		eventStatus.setText("Popup opened");
-        	else
-        		eventStatus.setText("Popup closed");
+            if (event.isOpened())
+                eventStatus.setText("Popup opened");
+            else
+                eventStatus.setText("Popup closed");
         });
-        
+
         addCard("Basic popup usage", button, popup, closeOnClickStatus, eventStatus);
     }
 
