@@ -260,6 +260,27 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
     }
 
     /**
+     * When true the Popup overlay will receive focus when opened and
+     * the Tab and Shift+Tab keys will cycle through the Popup's
+     * tabbable elements but will not leave the Popup.
+     *
+     * @param focusTrap {@code true} to enable focus trap
+     */
+    public void setFocusTrap(boolean focusTrap) {
+        getModel().setFocusTrap(focusTrap);
+    }
+
+    /**
+     * Gets whether the popup will receive a focus and the focus will be trapped in the popup 
+     * (see {@link Popup#setFocusTrap(boolean)})
+     * 
+     * @return {@code false} if focus trap is not set (default), {@code true} otherwise.
+     */
+    public boolean isFocusTrap() {
+        return getModel().isFocusTrap();
+    }
+
+    /**
      * Adds the given components into this popup.
      * <p>
      * The elements in the DOM will not be children of the {@code <vcf-popup>}
@@ -547,6 +568,10 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
         void setAlignment(String alignment);
 
         String getAlignment();
+
+        void setFocusTrap(boolean focusTrap);
+
+        boolean isFocusTrap();
     }
 
     @DomEvent("popup-open-changed")

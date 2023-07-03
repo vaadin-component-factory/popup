@@ -71,6 +71,7 @@ public class PopupGridView extends VerticalLayout {
     private Popup createPopupForPersonId(Person item) {
         Popup popup = new Popup();
         popup.setModeless(true);
+        popup.setFocusTrap(true);
         popup.addThemeVariants(PopupVariant.LUMO_POINTER_ARROW);
         popup.setPosition(PopupPosition.END);
         popup.setAlignment(PopupAlignment.CENTER);
