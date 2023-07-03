@@ -191,6 +191,7 @@ public class PopupView extends DemoView {
         popup.setFor(button.getId().orElse(null));
         popup.add(content);
         popup.setHeaderTitle("This is title");
+        popup.setFocusTrap(true);
 
         Button closeBtn = new Button(LumoIcon.CROSS.create());
         closeBtn.addClickListener(e -> popup.hide());
@@ -202,7 +203,7 @@ public class PopupView extends DemoView {
         apply.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         popup.getFooter().add(cancel, apply);
 
-        addCard("Popup with header and footer", button, popup);
+        addCard("Popup with header and footer (+focusTrap)", button, popup);
     }
 
     private void addBasicExample() {

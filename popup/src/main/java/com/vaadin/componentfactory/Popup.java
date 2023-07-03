@@ -260,6 +260,27 @@ public class Popup extends Component implements HasThemeVariant<PopupVariant> {
     }
 
     /**
+     * When true the Popup overlay will receive focus when opened and
+     * the Tab and Shift+Tab keys will cycle through the Popup's
+     * tabbable elements but will not leave the Popup.
+     *
+     * @param focusTrap {@code true} to enable focus trap
+     */
+    public void setFocusTrap(boolean focusTrap) {
+        getElement().setProperty("focusTrap", focusTrap);
+    }
+
+    /**
+     * Gets whether the popup will receive a focus and the focus will be trapped in the popup
+     * (see {@link Popup#setFocusTrap(boolean)})
+     *
+     * @return {@code false} if focus trap is not set (default), {@code true} otherwise.
+     */
+    public boolean isFocusTrap() {
+        return getElement().getProperty("focusTrap", false);
+    }
+
+    /**
      * Adds the given components into this popup.
      * <p>
      * The elements in the DOM will not be children of the {@code <vcf-popup>}
