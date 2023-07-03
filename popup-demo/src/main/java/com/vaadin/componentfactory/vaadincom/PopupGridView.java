@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 import com.vaadin.componentfactory.ComponentWithPopupRenderer;
 import com.vaadin.componentfactory.Popup;
+import com.vaadin.componentfactory.PopupAlignment;
 import com.vaadin.componentfactory.PopupPosition;
 import com.vaadin.componentfactory.PopupVariant;
 import com.vaadin.flow.component.Component;
@@ -72,6 +73,7 @@ public class PopupGridView extends VerticalLayout {
         popup.setModeless(true);
         popup.addThemeVariants(PopupVariant.LUMO_POINTER_ARROW);
         popup.setPosition(PopupPosition.END);
+        popup.setAlignment(PopupAlignment.CENTER);
         popup.setCloseOnScroll(this.closePopupsOnScroll);
         popup.setHeaderTitle(String.format("Popup %d", item.getId()));
         popup.getHeader().add(createPopupCloseButton(popup));
