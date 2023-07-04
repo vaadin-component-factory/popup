@@ -86,10 +86,12 @@ public class ComponentWithPopupRenderer<ITEM> extends ComponentRenderer<Componen
 
         // delegate calls to click() to the firstChild, if it exists (e.g. a button)
         // This enables opening the Popup using a spacebar in Grid when the cell has a focus.
+        // For details about preventPopupOpening see method trackKeyPopupKeyPresses()
         container.getElement().executeJs("this.click = function () {\n" +
-                "      if (!this.popupHasBeenJustClosed && this.firstChild && typeof this.firstChild.click === 'function') {\n" +
+                "      if (!this.preventPopupOpening && this.firstChild && typeof this.firstChild.click === 'function') {\n" +
                 "        this.firstChild.click();\n" +
                 "      }\n" +
+                "      this.preventPopupOpening=false;\n" +
                 "    }");
 
         return container;
@@ -101,18 +103,35 @@ public class ComponentWithPopupRenderer<ITEM> extends ComponentRenderer<Componen
 
     protected void generateAndShowPopup(ITEM item, HasComponents container, Component target) {
         Popup popup = createPopup(item, target);
+        trackKeyPopupKeyPresses(container, popup);
         popup.addPopupOpenChangedEventListener(event -> {
             // remove the popup from the DOM tree when it's closed
             if (!event.isOpened()) {
                 container.remove(popup);
-                // to prevent recreating and reopening the popup in the current event processing cycle
-                // which happens when the popup is closed by pressing a close-popup-button with a spacebar.
-                // Couldn't come with a better (and still reliable) solution than to wait for some time.
-                container.getElement().executeJs("this.popupHasBeenJustClosed = true;" +
-                        "setTimeout(() => {this.popupHasBeenJustClosed = false;}, 150);");
             }
         });
         container.add(popup);
         popup.show();
+    }
+
+    private void trackKeyPopupKeyPresses(HasComponents container, Popup popup) {
+        // The following code track individual key presses in the popup overlay.
+        // This helps to prevent the following undesired behavior:
+        // 1. Focus a grid cell in the grid (not the underlying button)
+        // 2. Press spacebar -> Popup is opened
+        // 3. Use tab to cycle through the Popup focusable controls, until you reach one which closes the popup (so for example some kind of "close popup button")
+        // 4. Press spacebar
+        // 5. Popup is closed and immediately reopened again (which is unexpected and unwanted behavior)
+        // What happens is that the 'keydown' event dispatched on a close-popup button calls its click() function.
+        // This closes the popup, but immediately transfers focus to the grid cell - even before the spacebar key is released by the user.
+        // So when the spacebar is released by the user, the 'keyup' event is received by the grid cell -> which
+        // is caught and causes a call to click() function of the component in the cell (which is a button that again opens the popup)
+        popup.getElement().executeJs("this.$.popupOverlay.addEventListener('keydown', (ev) => {\n" +
+                "      $0.preventPopupOpening=true;\n" +
+                "});", container.getElement());
+
+        popup.getElement().executeJs("this.$.popupOverlay.addEventListener('keyup', (ev) => {\n" +
+                "      $0.preventPopupOpening=false;\n" +
+                "});\n", container.getElement());
     }
 }
