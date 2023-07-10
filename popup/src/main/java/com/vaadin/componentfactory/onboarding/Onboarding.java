@@ -31,6 +31,7 @@ public class Onboarding implements Serializable {
     private final List<OnboardingStep> steps = new ArrayList<>();
     private int currentStep;
     private Popup currentPopup;
+    private boolean isSwitchingSteps;
 
     public List<OnboardingStep> getSteps() {
         return steps;
@@ -53,9 +54,20 @@ public class Onboarding implements Serializable {
 
     protected void showNextStep() {
         if (!isLastStep()) {
-            closeCurrentPopup();
-            currentStep++;
-            showPopupForCurrentStep();
+            whenSwitchingSteps(() -> {
+                closeCurrentPopup();
+                currentStep++;
+                showPopupForCurrentStep();
+            });
+        }
+    }
+
+    private void whenSwitchingSteps(Runnable action) {
+        isSwitchingSteps = true;
+        try {
+            action.run();
+        } finally {
+            isSwitchingSteps = false;
         }
     }
 
@@ -80,9 +92,11 @@ public class Onboarding implements Serializable {
 
     protected void showPreviousStep() {
         if (!isFirstStep()) {
-            closeCurrentPopup();
-            currentStep--;
-            showPopupForCurrentStep();
+            whenSwitchingSteps(() -> {
+                closeCurrentPopup();
+                currentStep--;
+                showPopupForCurrentStep();
+            });
         }
     }
 
@@ -92,16 +106,27 @@ public class Onboarding implements Serializable {
         popup.setHighlightTarget(true);
         popup.setPosition(onboardingStep.getPosition());
         popup.setAlignment(onboardingStep.getAlignment());
+        popup.setIgnoreTargetClick(true);
         if (onboardingStep.getTargetElement() != null) {
             popup.setTarget(onboardingStep.getTargetElement().getElement());
         }
 
         setupPopupHeader(onboardingStep, popup);
         setupPopupFooter(popup);
+        setupStopOnPopupClose(popup);
 
         popup.add(onboardingStep.getContent());
 
         return popup;
+    }
+
+    private void setupStopOnPopupClose(Popup popup) {
+        popup.addPopupOpenChangedEventListener(event -> {
+            if (!event.isOpened() && !this.isSwitchingSteps) {
+                // user clicked outside Popup -> stop the Onboarding
+                stop();
+            }
+        });
     }
 
     protected void setupPopupHeader(OnboardingStep onboardingStep, Popup popup) {
@@ -113,7 +138,7 @@ public class Onboarding implements Serializable {
             popup.getHeader().getElement().getStyle().set("display", "flex");
             popup.getHeader().getElement().getStyle().set("justify-content", "end");
         }
-        popup.getHeader().add(createPopupCloseButton());
+        popup.getHeader().add(createPopupCloseButton(popup));
     }
 
     protected void setupPopupFooter(Popup popup) {
@@ -172,10 +197,10 @@ public class Onboarding implements Serializable {
         return currentStep == steps.size() - 1;
     }
 
-    protected Button createPopupCloseButton() {
+    protected Button createPopupCloseButton(Popup popup) {
         Button closeBtn = new Button(LumoIcon.CROSS.create());
         closeBtn.setId(CLOSE_BUTTON_HEADER_ID);
-        closeBtn.addClickListener(e -> this.stop());
+        closeBtn.addClickListener(e -> popup.hide());
         closeBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_ICON);
         return closeBtn;
     }
