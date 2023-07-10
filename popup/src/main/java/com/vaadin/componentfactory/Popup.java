@@ -539,6 +539,10 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
         void setRendererCreated(boolean rendererCreated) {
             this.rendererCreated = rendererCreated;
         }
+
+        public Element getElement() {
+            return root;
+        }
     }
 
 
