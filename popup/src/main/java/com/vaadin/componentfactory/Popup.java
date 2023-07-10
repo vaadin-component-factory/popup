@@ -115,10 +115,10 @@ public class Popup extends Component implements HasThemeVariant<PopupVariant> {
     }
 
     /**
-     * Sets the target component for this popup.
+     * Sets the target component for this popup by using the element {@code id}.
      * <p>
-     * By default, the context menu can be opened with a left click or touch on
-     * the target component.
+     * The element should be in the DOM by the time when the attribute is set, otherwise a warning
+     * in the Javascript console is shown.
      *
      * @param id the if of component for this popup, can be {@code null} to
      *           remove the target
@@ -154,6 +154,18 @@ public class Popup extends Component implements HasThemeVariant<PopupVariant> {
      */
     public String getFor() {
         return getElement().getProperty("for");
+    }
+
+    /**
+     * Use this method to set the element which should be used as a Popup trigger.
+     * The target must be placed in the same shadow scope as the Popup element.
+     * <p>
+     * Note: you can get the Element of a component using {@code Component.getElement()} method.
+     *
+     * @param element Not-null to set the target element, use null to unset the target
+     */
+    public void setTarget(Element element) {
+        getElement().executeJs("this.target = $0", element);
     }
 
     /**

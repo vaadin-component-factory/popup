@@ -52,7 +52,7 @@ public class PopupView extends DemoView {
         content.setMaxHeight("200px");
 
         Popup popup = new Popup();
-        popup.setFor(button.getId().orElse(null));
+        popup.setTarget(button.getElement());
         popup.setPosition(PopupPosition.BOTTOM);
         popup.addThemeVariants(PopupVariant.LUMO_POINTER_ARROW);
         popup.add(content);
@@ -67,7 +67,7 @@ public class PopupView extends DemoView {
         content2.setMaxHeight("200px");
 
         Popup popup2 = new Popup();
-        popup2.setFor(button2.getId().orElse(null));
+        popup2.setTarget(button2.getElement());
         popup2.setPosition(PopupPosition.END);
         popup2.addThemeVariants(PopupVariant.LUMO_POINTER_ARROW);
         popup2.add(content2);

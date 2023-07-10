@@ -92,11 +92,8 @@ public class Onboarding implements Serializable {
         popup.setHighlightTarget(true);
         popup.setPosition(onboardingStep.getPosition());
         popup.setAlignment(onboardingStep.getAlignment());
-
         if (onboardingStep.getTargetElement() != null) {
-            popup.setFor(onboardingStep.getTargetElement().getId().orElseThrow(
-                    () -> new IllegalArgumentException("Onboarding step target element must have and ID"))
-            );
+            popup.setTarget(onboardingStep.getTargetElement().getElement());
         }
 
         setupPopupHeader(onboardingStep, popup);
