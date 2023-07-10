@@ -281,6 +281,25 @@ public class Popup extends Component implements HasThemeVariant<PopupVariant> {
     }
 
     /**
+     * When true, the popup target element will be highlighted, to make it absolutely clear what element the popup refers to.
+     * Handy for example when implementing walkthrough scenario (also known as onboarding).
+     *
+     * @param highlightTarget {@code true} to highlight target element on the screen
+     */
+    public void setHighlightTarget(boolean highlightTarget) {
+        getElement().setProperty("highlightTarget", highlightTarget);
+    }
+
+    /**
+     * Gets whether the target element will be highlighted when the popup is opened.
+     *
+     * @return {@code true} when the target element will be highlighted
+     */
+    public boolean isHighlightTarget() {
+        return getElement().getProperty("highlightTarget", false);
+    }
+
+    /**
      * Adds the given components into this popup.
      * <p>
      * The elements in the DOM will not be children of the {@code <vcf-popup>}
@@ -429,7 +448,6 @@ public class Popup extends Component implements HasThemeVariant<PopupVariant> {
             this.popup = popup;
             root = new Element("div");
             root.getStyle().set("display", "contents");
-            root.getStyle().set("background-color", "red");
         }
 
         /**
