@@ -312,6 +312,22 @@ public class Popup extends Component implements HasThemeVariant<PopupVariant> {
     }
 
     /**
+     * When set to false (default), the Popup will be shown when the target element (set either by 'for' or 'target' property)
+     * is clicked. When set to true, you have to open the Popup manually by calling the 'show()' method on the Popup.
+     * <p>
+     * By default, it's set to 'false' for backwards compatibility.
+     *
+     * @param ignoreTargetClick Whether to ignore the target clicking.
+     */
+    public void setIgnoreTargetClick(boolean ignoreTargetClick) {
+        getElement().setProperty("ignoreTargetClick", ignoreTargetClick);
+    }
+
+    public boolean isIgnoreTargetClick() {
+        return getElement().getProperty("ignoreTargetClick", false);
+    }
+
+    /**
      * Adds the given components into this popup.
      * <p>
      * The elements in the DOM will not be children of the {@code <vcf-popup>}
