@@ -312,6 +312,22 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
     }
 
     /**
+     * When set to false (default), the Popup will be shown when the target element (set either by 'for' or 'target' property)
+     * is clicked. When set to true, you have to open the Popup manually by calling the 'show()' method on the Popup.
+     * <p>
+     * By default, it's set to 'false' for backwards compatibility.
+     *
+     * @param ignoreTargetClick Whether to ignore the target clicking.
+     */
+    public void setIgnoreTargetClick(boolean ignoreTargetClick) {
+        getModel().setIgnoreTargetClick(ignoreTargetClick);
+    }
+
+    public boolean isIgnoreTargetClick() {
+        return getModel().isIgnoreTargetClick();
+    }
+
+    /**
      * Adds the given components into this popup.
      * <p>
      * The elements in the DOM will not be children of the {@code <vcf-popup>}
@@ -610,6 +626,11 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
         void setHighlightTarget(boolean highlightTarget);
 
         boolean isHighlightTarget();
+
+        void setIgnoreTargetClick(boolean ignoreTargetClick);
+
+        boolean isIgnoreTargetClick();
+
     }
 
     @DomEvent("popup-open-changed")
