@@ -539,6 +539,10 @@ public class Popup extends Component implements HasThemeVariant<PopupVariant> {
         void setRendererCreated(boolean rendererCreated) {
             this.rendererCreated = rendererCreated;
         }
+
+        public Element getElement() {
+            return root;
+        }
     }
 
 
