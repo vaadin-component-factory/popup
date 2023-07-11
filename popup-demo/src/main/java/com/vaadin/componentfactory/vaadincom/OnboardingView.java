@@ -35,10 +35,10 @@ public class OnboardingView extends VerticalLayout {
     private Onboarding createOnboarding(H3 header, Paragraph paragraph, Button makePurchase) {
         Onboarding onboarding = new Onboarding();
 
-        onboarding.getSteps().add(createStep1(header));
-        onboarding.getSteps().add(createStep2(paragraph));
-        onboarding.getSteps().add(createStep3(makePurchase));
-        onboarding.getSteps().add(createStep4());
+        onboarding.addStep(createStep1(header));
+        onboarding.addStep(createStep2(paragraph));
+        onboarding.addStep(createStep3(makePurchase));
+        onboarding.addStep(createStep4());
 
         return onboarding;
     }
