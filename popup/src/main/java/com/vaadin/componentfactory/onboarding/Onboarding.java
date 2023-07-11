@@ -52,6 +52,10 @@ public class Onboarding implements Serializable {
         return this.currentPopup != null && this.currentPopup.isOpened();
     }
 
+    public void addStep(OnboardingStep step) {
+        getSteps().add(step);
+    }
+
     protected void showNextStep() {
         if (!isLastStep()) {
             whenSwitchingSteps(() -> {
