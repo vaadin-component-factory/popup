@@ -27,7 +27,7 @@ public class OnboardingStep implements Serializable {
     private PopupAlignment alignment = PopupAlignment.CENTER;
     private Component content;
     private String header;
-    private List<SerializableConsumer<Popup>> beforePopupShownListeners = new ArrayList<>();
+    private final List<SerializableConsumer<Popup>> beforePopupShownListeners = new ArrayList<>();
 
     /**
      * Creates one step in the onboarding walkthrough.
