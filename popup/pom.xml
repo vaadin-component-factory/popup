@@ -6,7 +6,7 @@
     <groupId>com.vaadin.componentfactory</groupId>
     <artifactId>popup</artifactId>
     <packaging>jar</packaging>
-    <version>24.0.2-SNAPSHOT</version>
+    <version>24.0.2</version>
 
     <name>Popup</name>
 
