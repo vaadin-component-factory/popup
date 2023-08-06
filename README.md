@@ -3,7 +3,7 @@
 This is server-side component of [&lt;vcf-popup&gt;](https://github.com/vaadin-component-factory/vcf-popup) Web Component.
 It provides a popup that can be bound to element by id, and then be opened by clicking on target element. 
 
-[Live Demo ↗](https://incubator.app.fi/popup-demo/popup)
+[Live Demo ↗](https://componentfactory.app.fi/popup-demo/onboarding)
 
 <img src="https://raw.githubusercontent.com/vaadin/incubator-popup/master/screenshot.png" width="500" alt="Screenshot of vcf-popup">
 
