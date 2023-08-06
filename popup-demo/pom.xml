@@ -49,13 +49,13 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-component-demo-helpers</artifactId>
-            <version>9.1.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
     </dependencies>
 
@@ -88,7 +88,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
                 <configuration>
-                    <scanIntervalSeconds>1</scanIntervalSeconds>
+<!--                    <scanIntervalSeconds>1</scanIntervalSeconds>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -126,13 +126,7 @@
                 <!-- Exclude development dependencies from production -->
                 <dependency>
                     <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-core</artifactId>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>com.vaadin</groupId>
-                            <artifactId>vaadin-dev</artifactId>
-                        </exclusion>
-                    </exclusions>
+                    <artifactId>flow-server-production-mode</artifactId>
                 </dependency>
             </dependencies>
             <build>
@@ -144,7 +138,8 @@
                         <executions>
                             <execution>
                                 <goals>
-                                    <goal>build-frontend</goal>
+									<goal>prepare-frontend</goal>
+                                	<goal>build-frontend</goal>
                                 </goals>
                                 <phase>compile</phase>
                             </execution>

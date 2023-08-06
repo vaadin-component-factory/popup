@@ -1,4 +1,4 @@
-package com.vaadin.componentfactory.vaadincom;
+package com.vaadin.componentfactory.popup.demo.views;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,48 +9,60 @@ import com.vaadin.componentfactory.Popup;
 import com.vaadin.componentfactory.PopupAlignment;
 import com.vaadin.componentfactory.PopupPosition;
 import com.vaadin.componentfactory.PopupVariant;
+import com.vaadin.componentfactory.popup.demo.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoIcon;
 
-@Route("popup-grid")
+@Route(value = "popup-grid", layout = MainLayout.class)
 public class PopupGridView extends VerticalLayout {
 
     private boolean closePopupsOnScroll = true;
 
     public PopupGridView() {
+        add(new H3("Popup used in Grid rows"));
+
+        add(new Paragraph("This page demonstrates the possibility of using the Popup in the Grid. You can use " +
+                "ComponentWithPopupRenderer class to generate Grid columns with Popups like in the " +
+                "Grid below. Click on the content of the 'ID' column to open the Popup. You can " +
+                "also use the keyboard navigation in the Grid and open the Popup using Spacebar."));
+
         addGrid();
         addCloseOnScrollToggleButton();
     }
 
     private void addCloseOnScrollToggleButton() {
-        Span status = new Span("closeOnScroll: " + this.closePopupsOnScroll);
+        Span status = new Span(closeOnScrollStatusText());
 
         Button button = new Button("Toggle close popup on scroll");
         button.addClickListener(event -> {
             this.closePopupsOnScroll = !this.closePopupsOnScroll;
-            status.setText("closeOnScroll: " + this.closePopupsOnScroll);
+            status.setText(closeOnScrollStatusText());
         });
 
         final HorizontalLayout layout = new HorizontalLayout(button, status);
         layout.setAlignItems(Alignment.CENTER);
         add(layout);
-        add("Note that only popups in ID column are affected, because they are created dynamically when content is clicked.");
+    }
+
+    private String closeOnScrollStatusText() {
+        return "Popup `closeOnScroll` property value: " + this.closePopupsOnScroll;
     }
 
     private void addGrid() {
-        add("Click on content of 'ID' and 'First name' columns to open the popup");
         Grid<Person> grid = createGrid();
 
         addIdWithPopupColumn(grid);
-        addFirstNameWithPopupColumn(grid);
+        addFirstNameColumn(grid);
         addLastNameColumn(grid);
         addPersonTypeColumn(grid);
 
@@ -104,19 +116,9 @@ public class PopupGridView extends VerticalLayout {
         grid.addColumn(Person::getLastName).setHeader("Last name");
     }
 
-    private void addFirstNameWithPopupColumn(Grid<Person> grid) {
-        grid.addColumn(createComponentWithPopupRenderer()).setHeader("First name");
-    }
-
-    private ComponentWithPopupRenderer<Person> createComponentWithPopupRenderer() {
-        return new ComponentWithPopupRenderer<>(
-                this::createSpanWithFirstName,
-                this::createPopupForPersonId
-        );
-    }
-
-    private Component createSpanWithFirstName(Person item) {
-        return new Span(item.firstName);
+    private void addFirstNameColumn(Grid<Person> grid) {
+        grid.addColumn(Person::getLastName).setHeader("Last name");
+        grid.addColumn(Person::getFirstName).setHeader("First name");
     }
 
     private void addPersonTypeColumn(Grid<Person> grid) {
