@@ -42,7 +42,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
  * @author Vaadin Ltd
  */
 @Tag("vcf-popup")
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "23.3.2")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "23.3.3")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasThemeVariant<PopupVariant> {
@@ -424,6 +424,35 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
             this.popupHeader = new Popup.PopupHeader(this);
         }
         return this.popupHeader;
+    }
+
+    /**
+     * Set the {@code aria-label} attribute for assistive technologies like
+     * screen readers. An {@code undefined} value for this property (the
+     * default) means that the {@code aria-label} attribute is not present at
+     * all.
+     * <p>
+     * This property is not synchronized automatically from the client side, so
+     * the returned value may not be the same as in client side.
+     *
+     * @return the {@code ariaLabel} property from the webcomponent
+     */
+    public String getAriaLabel() {
+        return getElement().getProperty("ariaLabel");
+    }
+
+    /**
+     * Set the {@code aria-label} attribute for assistive technologies like
+     * screen readers. An {@code undefined} value for this property (the
+     * default) means that the {@code aria-label} attribute is not present at
+     * all.
+     *
+     * @param ariaLabel
+     *            the String value to set
+     */
+    public void setAriaLabel(String ariaLabel) {
+        getElement().setProperty("ariaLabel",
+                ariaLabel == null ? "" : ariaLabel);
     }
 
     /**
