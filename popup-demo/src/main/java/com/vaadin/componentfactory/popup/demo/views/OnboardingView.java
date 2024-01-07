@@ -49,7 +49,7 @@ public class OnboardingView extends VerticalLayout {
         add(startOnboardingButton);
 
         final Div spacer = new Div();
-        spacer.getStyle().set("height", "900px");
+        spacer.getStyle().set("height", "1300px");
         add(spacer);
 
         outOfViewportParagraph = new Paragraph("You have to scroll to see this text.");
