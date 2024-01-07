@@ -6,6 +6,7 @@ import com.vaadin.componentfactory.onboarding.OnboardingStep;
 import com.vaadin.componentfactory.popup.demo.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
@@ -17,6 +18,7 @@ import com.vaadin.flow.router.Route;
 public class OnboardingView extends VerticalLayout {
 
     private Paragraph topParagraph;
+    private Paragraph outOfViewportParagraph;
     private Button actionButton;
     private Button startOnboardingButton;
     private H3 header;
@@ -45,6 +47,13 @@ public class OnboardingView extends VerticalLayout {
         startOnboardingButton = new Button("Start onboarding");
         startOnboardingButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         add(startOnboardingButton);
+
+        final Div spacer = new Div();
+        spacer.getStyle().set("height", "900px");
+        add(spacer);
+
+        outOfViewportParagraph = new Paragraph("You have to scroll to see this text.");
+        add(outOfViewportParagraph);
     }
 
     private Onboarding createOnboarding() {
@@ -52,10 +61,20 @@ public class OnboardingView extends VerticalLayout {
 
         onboarding.addStep(createStepHeader());
         onboarding.addStep(createStepTopParagraph());
+        onboarding.addStep(createStepOutOfViewParagraph());
         onboarding.addStep(createStepActionButton());
         onboarding.addStep(createStepNoTarget());
 
         return onboarding;
+    }
+
+    private OnboardingStep createStepOutOfViewParagraph() {
+        final OnboardingStep step = new OnboardingStep(outOfViewportParagraph);
+        step.setHeader("Scroll to popup target");
+        step.setContent("When a target of the onboarding step is not visible, the screen " +
+                "will be scrolled to make it visible before the popup opens.");
+        step.setPosition(PopupPosition.BOTTOM);
+        return step;
     }
 
     private OnboardingStep createStepNoTarget() {

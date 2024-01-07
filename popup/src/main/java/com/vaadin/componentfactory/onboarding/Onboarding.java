@@ -111,6 +111,9 @@ public class Onboarding implements Serializable {
         popup.setPosition(onboardingStep.getPosition());
         popup.setAlignment(onboardingStep.getAlignment());
         popup.setIgnoreTargetClick(true);
+        popup.setScrollTargetIntoView(true);
+        popup.setCloseOnScroll(false);
+        popup.setRestoreFocusOnClose(false);
         if (onboardingStep.getTargetElement() != null) {
             popup.setTarget(onboardingStep.getTargetElement().getElement());
         }
