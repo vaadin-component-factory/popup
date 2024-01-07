@@ -17,17 +17,7 @@
  */
 package com.vaadin.componentfactory;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import com.vaadin.flow.component.AttachEvent;
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.ComponentEvent;
-import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.DomEvent;
-import com.vaadin.flow.component.EventData;
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
@@ -35,6 +25,9 @@ import com.vaadin.flow.component.shared.HasThemeVariant;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.flow.templatemodel.TemplateModel;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Server-side component for the <code>vcf-popup</code> element.
@@ -312,6 +305,25 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
     }
 
     /**
+     * When true, the popup target element will be scrolled into view if it's not visible on the screen when
+     * the popup is opened.
+     *
+     * @param scrollTargetIntoView {@code true} to scroll target element into view on popup open
+     */
+    public void setScrollTargetIntoView(boolean scrollTargetIntoView) {
+        getElement().setProperty("scrollTargetIntoView", scrollTargetIntoView);
+    }
+
+    /**
+     * Gets whether the target element will be scrolled into view when the popup is opened.
+     *
+     * @return {@code true} when the target element will be scrolled into view
+     */
+    public boolean isScrollTargetIntoView() {
+        return getElement().getProperty("scrollTargetIntoView", false);
+    }
+
+    /**
      * When set to false (default), the Popup will be shown when the target element (set either by 'for' or 'target' property)
      * is clicked. When set to true, you have to open the Popup manually by calling the 'show()' method on the Popup.
      * <p>
@@ -447,8 +459,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
      * default) means that the {@code aria-label} attribute is not present at
      * all.
      *
-     * @param ariaLabel
-     *            the String value to set
+     * @param ariaLabel the String value to set
      */
     public void setAriaLabel(String ariaLabel) {
         getElement().setProperty("ariaLabel",

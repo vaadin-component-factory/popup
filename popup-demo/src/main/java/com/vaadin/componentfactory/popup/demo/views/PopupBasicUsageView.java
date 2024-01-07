@@ -125,9 +125,18 @@ public class PopupBasicUsageView extends HorizontalLayout {
         layout.add(createPointerArrowThemeOption());
         layout.add(createHighlightTargetOption());
         layout.add(createPopupAlignmentOption());
+        layout.add(createScrollTargetIntoViewOption());
         layout.add(createPopupPositionOption());
 
         return layout;
+    }
+
+    private Component createScrollTargetIntoViewOption() {
+        popup.setScrollTargetIntoView(false);
+        Checkbox option = new Checkbox("Scroll target into view on popup open");
+        option.addValueChangeListener(event -> popup.setScrollTargetIntoView(event.getValue()));
+        option.setValue(false);
+        return option;
     }
 
     private Component createFocusTrapOption() {
