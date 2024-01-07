@@ -16,47 +16,58 @@ import com.vaadin.flow.router.Route;
 @Route(value = "onboarding", layout = MainLayout.class)
 public class OnboardingView extends VerticalLayout {
 
+    private Paragraph topParagraph;
+    private Button actionButton;
+    private Button startOnboardingButton;
+    private H3 header;
+
     public OnboardingView() {
-        final H3 header = new H3("How to use Popup to create an onboarding experience");
+        createUI();
+
+        Onboarding onboarding = createOnboarding();
+        startOnboardingButton.addClickListener(event -> onboarding.start());
+    }
+
+    private void createUI() {
+        header = new H3("How to use Popup to create an onboarding experience");
         add(header);
 
-        final Paragraph paragraph = new Paragraph("The idea is to use the Popup component to create a simple" +
+        topParagraph = new Paragraph("The idea is to use the Popup component to create a simple" +
                 " Onboarding (also known as Walkthrough) experience for the  user. A simple API was created as part of " +
                 "the component to make it easy to create such onboarding. There are two classes: Onboarding and OnboardingStep. " +
                 "To use it, create an instance of the Onboarding class and fill it with the OnboardingSteps. In the simplest form, " +
                 "you only have to provide three things for each OnboardingStep: a target element, a header text, and a content text.");
-        add(paragraph);
+        add(topParagraph);
 
-        final Button actionButton = new Button("Some Action");
+        actionButton = new Button("Some Action");
         add(actionButton);
 
-        Onboarding onboarding = createOnboarding(header, paragraph, actionButton);
-        final Button startOnboarding = new Button("Start onboarding", event -> onboarding.start());
-        startOnboarding.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        add(startOnboarding);
+        startOnboardingButton = new Button("Start onboarding");
+        startOnboardingButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        add(startOnboardingButton);
     }
 
-    private Onboarding createOnboarding(H3 header, Paragraph paragraph, Button makePurchase) {
+    private Onboarding createOnboarding() {
         Onboarding onboarding = new Onboarding();
 
-        onboarding.addStep(createStep1(header));
-        onboarding.addStep(createStep2(paragraph));
-        onboarding.addStep(createStep3(makePurchase));
-        onboarding.addStep(createStep4());
+        onboarding.addStep(createStepHeader());
+        onboarding.addStep(createStepTopParagraph());
+        onboarding.addStep(createStepActionButton());
+        onboarding.addStep(createStepNoTarget());
 
         return onboarding;
     }
 
-    private OnboardingStep createStep4() {
-        final OnboardingStep onboardingStep4 = new OnboardingStep(null);
-        onboardingStep4.setHeader("No target");
-        onboardingStep4.setContent("This onboarding step does not have any related target element");
-        return onboardingStep4;
+    private OnboardingStep createStepNoTarget() {
+        final OnboardingStep step = new OnboardingStep(null);
+        step.setHeader("No target");
+        step.setContent("This onboarding step does not have any related target element");
+        return step;
     }
 
-    private OnboardingStep createStep3(Button makePurchase) {
-        final OnboardingStep onboardingStep3 = new OnboardingStep(makePurchase);
-        onboardingStep3.setHeader("Popup with rich content");
+    private OnboardingStep createStepActionButton() {
+        final OnboardingStep step = new OnboardingStep(actionButton);
+        step.setHeader("Popup with rich content");
 
         VerticalLayout content = new VerticalLayout();
         content.setWidthFull();
@@ -65,25 +76,25 @@ public class OnboardingView extends VerticalLayout {
         vaadinLogo.setWidth("15rem");
         content.add(vaadinLogo);
         content.add(new Paragraph("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at turpis nec nisl lobortis convallis. Curabitur nec ipsum mauris."));
-        onboardingStep3.setContent(content);
-        onboardingStep3.getContent().getElement().getStyle().set("max-width", "30rem");
+        step.setContent(content);
+        step.getContent().getElement().getStyle().set("max-width", "30rem");
 
-        return onboardingStep3;
+        return step;
     }
 
-    private OnboardingStep createStep2(Paragraph paragraph) {
-        final OnboardingStep onboardingStep2 = new OnboardingStep(paragraph);
-        onboardingStep2.setHeader("Bottom positioned");
-        onboardingStep2.setContent("Popup for this step is positioned to the bottom of the target element");
-        onboardingStep2.setPosition(PopupPosition.BOTTOM);
-        return onboardingStep2;
+    private OnboardingStep createStepTopParagraph() {
+        final OnboardingStep step = new OnboardingStep(topParagraph);
+        step.setHeader("Bottom positioned");
+        step.setContent("Popup for this step is positioned to the bottom of the target element");
+        step.setPosition(PopupPosition.BOTTOM);
+        return step;
     }
 
-    private OnboardingStep createStep1(H3 header) {
-        final OnboardingStep onboardingStep1 = new OnboardingStep(header);
-        onboardingStep1.setHeader("Start here");
-        onboardingStep1.setContent("You can associate the Onboarding Step with any Component on the screen. Note: This popup is customized using the addBeforePopupShown listener - 'More info' button is added to the footer.");
-        onboardingStep1.addBeforePopupShownListener(popup -> {
+    private OnboardingStep createStepHeader() {
+        final OnboardingStep step = new OnboardingStep(header);
+        step.setHeader("Start here");
+        step.setContent("You can associate the Onboarding Step with any Component on the screen. Note: This popup is customized using the addBeforePopupShown listener - 'More info' button is added to the footer.");
+        step.addBeforePopupShownListener(popup -> {
             final Button moreInfo = new Button("More info");
             moreInfo.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
             moreInfo.getElement().getStyle().set("position", "absolute");
@@ -91,7 +102,7 @@ public class OnboardingView extends VerticalLayout {
             moreInfo.addClickListener(event -> Notification.show("Some action"));
             popup.getFooter().add(moreInfo);
         });
-        return onboardingStep1;
+        return step;
     }
 
 }
