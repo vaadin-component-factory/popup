@@ -324,6 +324,23 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
     }
 
     /**
+     * Set to false to disable restoring of focus to the element which had focus before the popup was opened.
+     * Focus is restored after popup close. By default is set to true - focus is restored.
+     *
+     * @param restoreFocusOnClose {@code false} to disable restoring of focus when popup is closed.
+     */
+    public void setRestoreFocusOnClose(boolean restoreFocusOnClose) {
+        getElement().setProperty("restoreFocusOnClose", restoreFocusOnClose);
+    }
+
+    /**
+     * @return {@code true} when focus should be restored after popup is closed. Default is true.
+     */
+    public boolean isRestoreFocusOnClose() {
+        return getElement().getProperty("restoreFocusOnClose", true);
+    }
+
+    /**
      * When set to false (default), the Popup will be shown when the target element (set either by 'for' or 'target' property)
      * is clicked. When set to true, you have to open the Popup manually by calling the 'show()' method on the Popup.
      * <p>
