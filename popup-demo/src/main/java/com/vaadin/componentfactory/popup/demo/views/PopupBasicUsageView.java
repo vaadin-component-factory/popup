@@ -122,6 +122,7 @@ public class PopupBasicUsageView extends HorizontalLayout {
         layout.add(createCloseOnScrollOption());
         layout.add(createIgnoreTargetClickOption());
         layout.add(createFocusTrapOption());
+        layout.add(createRestoreFocusOnCloseOption());
         layout.add(createPointerArrowThemeOption());
         layout.add(createHighlightTargetOption());
         layout.add(createPopupAlignmentOption());
@@ -129,6 +130,14 @@ public class PopupBasicUsageView extends HorizontalLayout {
         layout.add(createPopupPositionOption());
 
         return layout;
+    }
+
+    private Component createRestoreFocusOnCloseOption() {
+        popup.setRestoreFocusOnClose(true);
+        Checkbox option = new Checkbox("Restore focus on close");
+        option.addValueChangeListener(event -> popup.setRestoreFocusOnClose(event.getValue()));
+        option.setValue(true);
+        return option;
     }
 
     private Component createScrollTargetIntoViewOption() {
