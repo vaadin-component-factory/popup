@@ -35,7 +35,7 @@ import java.util.Objects;
  * @author Vaadin Ltd
  */
 @Tag("vcf-popup")
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "23.3.3")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "23.3.4")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasThemeVariant<PopupVariant> {
