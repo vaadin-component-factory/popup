@@ -6,7 +6,7 @@
     <groupId>com.vaadin.componentfactory</groupId>
     <artifactId>popup-demo</artifactId>
     <packaging>war</packaging>
-    <version>23.3.4</version>
+    <version>23.3.5-SNAPSHOT</version>
 
     <name>Popup Demo</name>
 
