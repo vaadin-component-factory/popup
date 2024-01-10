@@ -6,7 +6,7 @@
 	<groupId>com.vaadin.componentfactory</groupId>
 	<artifactId>popup-root</artifactId>
 	<packaging>pom</packaging>
-	<version>23.3.4-SNAPSHOT</version>
+	<version>23.3.4</version>
 
 	<name>Popup Root</name>
 
