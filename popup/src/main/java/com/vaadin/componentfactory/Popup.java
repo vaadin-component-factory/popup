@@ -148,7 +148,13 @@ public class Popup extends Component implements HasThemeVariant<PopupVariant> {
             if (id == null && this.target == null) {
                 getElement().callJsFunction("disconnectedCallback");
             } else {
-                getElement().callJsFunction("connectedCallback");              
+                getElement().callJsFunction("connectedCallback");
+                if(this.getHeader().isRendererCreated()) {
+                  this.getHeader().initRenderer();
+                }
+                if(this.getFooter().isRendererCreated()) {
+                  this.getFooter().initRenderer();
+                }               
             }
         }
     }
