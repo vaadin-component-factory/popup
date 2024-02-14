@@ -44,6 +44,8 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
 
     private Popup.PopupHeader popupHeader;
     private Popup.PopupFooter popupFooter;
+    
+    private Element target = null;
 
     public Popup() {
         template = new Element("template");
@@ -121,19 +123,25 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
     }
 
     @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        getElement().appendChild(template);
+    protected void onAttach(AttachEvent attachEvent) { 
+        getElement().appendChild(template);        
+        
+        // set target if it was defined
+        if(this.target != null) {
+          getElement().executeJs("this.target = $0", this.target);
+        }
+
         // Attach <flow-component-renderer>
         getElement().getNode()
                 .runWhenAttached(ui -> ui.beforeClientResponse(this,
                         context -> attachComponentRenderer()));
-
+       
         String id = getModel().getFor();
         if (template.getProperty("innerHTML", false)) {
-            if (id == null) {
+            if (id == null && this.target == null) {
                 getElement().callJsFunction("disconnectedCallback");
             } else {
-                getElement().callJsFunction("connectedCallback");
+                getElement().callJsFunction("connectedCallback");              
             }
         }
     }
@@ -158,7 +166,7 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> implements HasTheme
      * @param element Not-null to set the target element, use null to unset the target
      */
     public void setTarget(Element element) {
-        getElement().executeJs("this.target = $0", element);
+        this.target = element;
     }
 
     /**
