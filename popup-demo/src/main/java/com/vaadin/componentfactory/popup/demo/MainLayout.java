@@ -15,8 +15,9 @@ public class MainLayout extends AppLayout {
         final RouterLink headerAndFooter = new RouterLink("Header and Footer", HeaderAndFooterView.class);
         final RouterLink popupInGrid = new RouterLink("Popup in Grid", PopupGridView.class);
         final RouterLink onboardingDemo = new RouterLink("Onboarding Demo", OnboardingView.class);
+        final RouterLink select = new RouterLink("Select", SelectView.class);
 
-        final VerticalLayout menuLayout = new VerticalLayout(basicUsages, headerAndFooter, popupInGrid, onboardingDemo);
+        final VerticalLayout menuLayout = new VerticalLayout(basicUsages, headerAndFooter, popupInGrid, onboardingDemo, select);
         addToDrawer(menuLayout);
         addToNavbar(drawerToggle);
     }
