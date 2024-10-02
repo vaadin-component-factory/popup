@@ -55,7 +55,7 @@ class VcfPopup extends ElementMixin(ThemableMixin(PolymerElement)) {
   }
 
   static get version() {
-    return '24.0.3';
+    return '24.1.1';
   }
 
   /**
@@ -388,7 +388,11 @@ class VcfPopup extends ElementMixin(ThemableMixin(PolymerElement)) {
 
   __targetClicked() {
     if (!this.ignoreTargetClick) {
-      this.show();
+      if (this.opened) {
+        this.opened = false;
+      } else {
+        this.show();
+      }
     }
   }
 
