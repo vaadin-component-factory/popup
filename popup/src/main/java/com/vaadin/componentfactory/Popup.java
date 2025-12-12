@@ -33,7 +33,7 @@ import java.util.Objects;
  * @author Vaadin Ltd
  */
 @Tag("vcf-popup")
-@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.2.6")
+@NpmPackage(value = "@vaadin-component-factory/vcf-popup", version = "1.2.8")
 @JsModule("./flow-component-renderer.js")
 @JsModule("@vaadin-component-factory/vcf-popup/src/vcf-popup.js")
 public class Popup extends PolymerTemplate<Popup.PopupModel> {
@@ -251,6 +251,23 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
             show();
         }
     }
+    
+    /**
+     * Gets modeless value from popup.
+     * 
+     * @return true if popup is modeless, false otherwise
+     */
+    public boolean isModeless() {
+      return getModel().isModeless();
+    }
+
+    /**
+     * Sets the popup to be modeless.
+     * 
+     * @param modeless true if popup should be modeless, false otherwise
+     */
+    public void setModeless(boolean modeless) {
+      getModel().setModeless(modeless);    }
 
     /**
      * This model binds properties between java(Popup) and
@@ -268,6 +285,11 @@ public class Popup extends PolymerTemplate<Popup.PopupModel> {
         void setCloseOnClick(boolean close);
 
         boolean isCloseOnClick();
+        
+        boolean isModeless();
+        
+        void setModeless(boolean modeless);      
+       
     }
 
     @DomEvent("popup-open-changed")
