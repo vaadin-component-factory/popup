@@ -6,3 +6,5 @@ target/
 **/package-lock.json
 **/bower_components/
 /.settings/
+.classpath
+.project
