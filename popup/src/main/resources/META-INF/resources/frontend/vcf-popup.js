@@ -401,6 +401,10 @@ class VcfPopup extends ElementMixin(ThemableMixin(PolymerElement)) {
   }
 
   hide(event) {
+	if (!event) {
+        this.opened = false;
+        return;
+    }
     const lastOverlay = this.getAttachedInstances().pop();
     const isLastOverlay = this.$.popupOverlay === lastOverlay;
     if (

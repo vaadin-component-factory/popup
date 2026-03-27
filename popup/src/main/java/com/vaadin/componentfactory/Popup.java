@@ -43,6 +43,7 @@ import com.vaadin.flow.shared.Registration;
 @Tag("vcf-popup")
 @NpmPackage(value = "@polymer/iron-media-query", version = "^3.0.1")
 @JsModule("./flow-component-renderer.js")
+@JsModule("./vcf-popup-overlay-styles.js")
 @JsModule("./vcf-popup.js")
 public class Popup extends Component implements HasThemeVariant<PopupVariant> {
     private Element template;
